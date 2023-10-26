@@ -9,13 +9,19 @@ gitman install
 
 cd ~
 mkdir laser_uav_system_ws
-cd /laser_uav_system_ws
+cd ~/laser_uav_system_ws
 mkdir src
 cd src
 
-ln -sf ~/git/laser_uav_system/* ./
+ln -sf ~/git/laser_uav_system/ros_packages/* ./
+
+cd ~/git/laser_uav_system/ros_packages/px4_autopilot
+bash ./Tools/setup/ubuntu.sh
 
 cd ~/laser_uav_system_ws
+sudo rosdep init
+rosdep update
+rosdep install -i --from-path src --rosdistro humble -Y
 colcon build
 
 source ~/laser_uav_system_ws/install/setup.bash && echo "source ~/laser_uav_system/install/setup.bash" >> .bashrc
