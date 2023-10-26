@@ -1,0 +1,54 @@
+location: .gitman
+sources:
+  - repo: git@github.com:LASER-Robotics/PX4-Autopilot-ROS2.git 
+    name: PX4-Autopilot-ROS2
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      - 
+    links:
+      - source: ''
+        target: ros_packages/px4_autopilot
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/Micro-XRCE-DDS-Agent.git
+    name: Micro-XRCE-DDS-Agent
+    rev: master
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/micro_xrce_dds_agent
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/px4_msgs.git
+    name: px4_msgs
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/px4_msgs
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/px4_ros_com.git
+    name: px4_ros_com
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/px4_ros_com
+    scripts:
+      - git submodule update --init --recursive
+sources_locked:
+groups:
+  -
+default_group: ''
