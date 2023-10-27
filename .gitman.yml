@@ -1,17 +1,5 @@
 location: .gitman
 sources:
-  - repo: git@github.com:LASER-Robotics/PX4-Autopilot-ROS2.git 
-    name: PX4-Autopilot-ROS2
-    rev: main
-    type: git
-    params:
-    sparse_paths:
-      - 
-    links:
-      - source: ''
-        target: ros_packages/px4_autopilot
-    scripts:
-      - git submodule update --init --recursive
   - repo: git@github.com:LASER-Robotics/Micro-XRCE-DDS-Agent.git
     name: Micro-XRCE-DDS-Agent
     rev: master

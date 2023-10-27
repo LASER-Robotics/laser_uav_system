@@ -1,0 +1,15 @@
+name: simulation
+root: ~/laser_uav_system_ws/src
+startup_window: gazebo
+pre_window:
+windows:
+  - gazebo:
+      layout: even-horizontal
+      panes:
+        - sleep 1; cd ./PX4-Autopilot; make px4_sitl gz_x500
+        - sleep 3; MicroXRCEAgent udp4 -p 8888
+  - free_cmd:
+      layout: tiled
+      panes:
+        - 'history -s ros2 topic list'
+

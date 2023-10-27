@@ -7,6 +7,9 @@ pip3 install --upgrade gitman
 
 gitman install
 
+cd ~/git/laser_uav_system/ros_packages/
+git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+
 cd ~
 mkdir laser_uav_system_ws
 cd ~/laser_uav_system_ws
@@ -21,9 +24,7 @@ bash ./Tools/setup/ubuntu.sh
 cd ~/laser_uav_system_ws
 sudo rosdep init
 rosdep update
-rosdep install -i --from-path src --rosdistro humble -Y
+rosdep install -i --from-path src --rosdistro humble
 colcon build
 
 source ~/laser_uav_system_ws/install/setup.bash && echo "source ~/laser_uav_system/install/setup.bash" >> .bashrc
-
-
