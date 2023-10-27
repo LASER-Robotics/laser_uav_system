@@ -9,3 +9,10 @@ cd laser_uav_system
 sudo chmod +x install.sh
 ./install.sh
 ```
+
+### X500 simulation
+
+```
+cd ~/git/laser_uav_system/tests_tmux_scripts/gz_one_drone_x500
+./start.sh
+```
