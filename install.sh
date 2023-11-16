@@ -1,31 +1,21 @@
-sudo apt update && sudo apt install locales
-sudo locale-gen en_US en_US.UTF-8
-sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-export LANG=en_US.UTF-8
-sudo apt install software-properties-common
-sudo add-apt-repository universe
-sudo apt update && sudo apt install curl -y
-sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-sudo apt update && sudo apt upgrade -y
-sudo apt install ros-humble-desktop
-sudo apt install ros-dev-tools
-source /opt/ros/humble/setup.bash && echo "source /opt/ros/humble/setup.bash" >> .bashrc
+# Install ROS Humble and Gazebo garden
+cd ./enviroment_install
+chmod +x install_ros_humble.sh
+chmod +x install_gazebo.sh
+./install_ros_humble.sh
+./install_gazebo.sh
 
-pip install --user -U empy pyros-genmsg setuptools
-
-sudo wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
-sudo apt-get update
-sudo apt-get install gz-garden
-
+# Install dep and packages
+pip3 install kconfiglib
 pip3 install --upgrade gitman
 
+cd ../
 gitman install
 
 cd ~/git/laser_uav_system/ros_packages/
 git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 
+# Create workspace and create symbolic link for dirs
 cd ~
 mkdir laser_uav_system_ws
 cd ~/laser_uav_system_ws
@@ -34,12 +24,30 @@ cd src
 
 ln -sf ~/git/laser_uav_system/ros_packages/* ./
 
-cd ~/git/laser_uav_system/ros_packages/px4_autopilot
+# Set configs of PX4
+cd ~/git/laser_uav_system/ros_packages/PX4-Autopilot
 bash ./Tools/setup/ubuntu.sh
 
+# Make package with comunication protocol
+cd ~/laser_uav_system/src/micro-xrce-dds-agent
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+sudo ldconfig /usr/local/lib/
+
+# Build workspace
 cd ~/laser_uav_system_ws
-sudo rosdep init
+sudo rosdep init 
 rosdep update
-rosdep install -i --from-path src --rosdistro humble
-colcon build
-source ~/laser_uav_system_ws/install/setup.bash && echo "source ~/laser_uav_system_ws/install/setup.bash" >> .bashrc
+rosdep install -i --from-path src --rosdistro humble -y
+
+if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
+  source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
+fi
+
+toilet laser
+toilet uav
+toilet system 
+toilet installed
