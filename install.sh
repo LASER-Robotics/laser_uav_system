@@ -1,7 +1,5 @@
 # Install ROS Humble and Gazebo garden
 cd ./enviroment_install
-chmod +x install_ros_humble.sh
-chmod +x install_gazebo.sh
 ./install_ros_humble.sh
 ./install_gazebo.sh
 
@@ -29,7 +27,7 @@ cd ~/git/laser_uav_system/ros_packages/PX4-Autopilot
 bash ./Tools/setup/ubuntu.sh
 
 # Make package with comunication protocol
-cd ~/laser_uav_system/src/micro-xrce-dds-agent
+cd ~/laser_uav_system_ws/src/micro_xrce_dds_agent
 mkdir build
 cd build
 cmake ..
