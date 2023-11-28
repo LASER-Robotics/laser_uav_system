@@ -1,4 +1,6 @@
-# Install ROS Humble and Gazebo garden
+#!/bin/bash
+
+#Install ROS Humble and Gazebo garden
 cd ./enviroment_install
 ./install_ros_humble.sh
 ./install_gazebo.sh
