@@ -6,7 +6,7 @@ windows:
   - gazebo:
       layout: even-horizontal
       panes:
-        - sleep 1; cd ./PX4-Autopilot; make px4_sitl gz_x500
+        - sleep 1; cd ~/git/laser_uav_system/ros_packages/PX4-Autopilot; make px4_sitl gz_x500
         - sleep 3; MicroXRCEAgent udp4 -p 8888
   - free_cmd:
       layout: tiled

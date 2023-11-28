@@ -7,11 +7,15 @@ cd ./enviroment_install
 pip3 install kconfiglib
 pip3 install --upgrade gitman
 
+cd ~/git/laser_uav_system/.gitman/
+git clone git@github.com:PX4/PX4-Autopilot.git --recursive 
+cd PX4-Autopilot
+git checkout 94d4dc8
+cd ~/git/laser_uav_system/ros_packages/
+ln -sf ~/git/laser_uav_system/.gitman/PX4-Autopilot ./
+
 cd ../
 gitman install
-
-cd ~/git/laser_uav_system/ros_packages/
-git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 
 # Create workspace and create symbolic link for dirs
 cd ~
@@ -25,6 +29,7 @@ ln -sf ~/git/laser_uav_system/ros_packages/* ./
 # Set configs of PX4
 cd ~/git/laser_uav_system/ros_packages/PX4-Autopilot
 bash ./Tools/setup/ubuntu.sh
+make px4_sitl
 
 # Make package with comunication protocol
 cd ~/laser_uav_system_ws/src/micro_xrce_dds_agent
@@ -40,6 +45,7 @@ cd ~/laser_uav_system_ws
 sudo rosdep init 
 rosdep update
 rosdep install -i --from-path src --rosdistro humble -y
+colcon build
 
 if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
   source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc

@@ -16,6 +16,9 @@ sudo apt install ros-dev-tools -y
 
 sudo apt install python3-colcon-clean -y
 
+sudo apt install python3-colcon-common-extensions
+sudo apt install ros-humble-eigen3-cmake-module
+
 pip install --user -U empy pyros-genmsg setuptools
 
 if [ $(grep -c "/opt/ros/humble/setup.bash" ~/.bashrc) -ne 1 ]; then
@@ -42,8 +45,14 @@ if [ $(grep -c "PYTHONWARNINGS" ~/.bashrc) -ne 1 ]; then
   echo -e "# reduce depraction warning spam in colcon\n export PYTHONWARNINGS='ignore:::setuptools.command.install,ignore:::setuptools.command.easy_install,ignore:::pkg_resources'" >> ~/.bashrc
 fi
 
+if [ $(grep -c "ROS_DOMAIN_ID" ~/.bashrc) -ne 1 ]; then
+  resp=0
+  [[ -t 0 ]] && { read -p $'\e[1;32mChoice a ROS domain ID:\e[0m\n' resp ; }
+  echo -e "# always set ROS domain id\n export ROS_DOMAIN_ID="$resp"" >> ~/.bashrc
+fi
+
 if [ $(grep -c "ROS_LOCALHOST_ONLY" ~/.bashrc) -ne 1 ]; then
-  echo -e "# always set ROS running in local\n export ROS_LOCALHOST_ONLY=1" >> ~/.bashrc
+  echo -e "# always set ROS localhost only\n export ROS_LOCALHOST_ONLY=0" >> ~/.bashrc
 fi
 
 if [ $(grep -c "RCUTILS_LOGGING_BUFFERED_STREAM" ~/.bashrc) -ne 1 ]; then
