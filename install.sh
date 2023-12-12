@@ -28,6 +28,11 @@ cd src
 
 ln -sf ~/git/laser_uav_system/ros_packages/* ./
 
+mkdir px4_packages
+mv micro_xrce_dds_agent ./px4_packages
+mv px4_msgs ./px4_packages
+mv PX4-Autopilot ./px4_packages
+
 # Set configs of PX4
 cd ~/git/laser_uav_system/ros_packages/PX4-Autopilot
 bash ./Tools/setup/ubuntu.sh
@@ -47,7 +52,7 @@ cd ~/laser_uav_system_ws
 sudo rosdep init 
 rosdep update
 rosdep install -i --from-path src --rosdistro humble -y
-colcon build
+colcon build --packages-skip px4 
 
 if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
   source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc

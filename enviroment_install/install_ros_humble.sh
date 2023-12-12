@@ -47,7 +47,7 @@ fi
 
 if [ $(grep -c "ROS_DOMAIN_ID" ~/.bashrc) -ne 1 ]; then
   resp=0
-  [[ -t 0 ]] && { read -p $'\e[1;32mChoice a ROS domain ID:\e[0m\n' resp ; }
+  [[ -t 0 ]] && { read -p $'\e[1;32mChoice a number between 46 and 232 for ROS domain ID :\e[0m\n' resp ; }
   echo -e "# always set ROS domain id\n export ROS_DOMAIN_ID="$resp"" >> ~/.bashrc
 fi
 
