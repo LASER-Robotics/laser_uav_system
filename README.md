@@ -1,6 +1,6 @@
 # laser_uav_system
 
-```
+```sh
 cd ~
 mkdir git
 cd git
@@ -11,7 +11,7 @@ cd laser_uav_system
 
 ### X500 simulation
 
-```
+```sh
 cd ~/git/laser_uav_system/tests_tmux_scripts/gz_one_drone_x500
 ./start.sh
 ```
