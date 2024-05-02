@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Install Gazebo
-sudo wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+cat /etc/apt/sources.list.d/gazebo-stable.list
+deb http://packages.osrfoundation.org/gazebo/ubuntu-stable bionic main
+wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+
 sudo apt-get update
-sudo apt-get install gz-garden
+sudo apt-get install gazebo11
+sudo apt-get install libgazebo11-dev

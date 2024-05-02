@@ -2,17 +2,26 @@
 
 #Install ROS Humble and Gazebo garden
 cd ./enviroment_install
-./install_ros_humble.sh
-./install_gazebo.sh
 
-# Install dep and packages
+if ! ls "/opt" | grep -q "ros"; then
+  ./install_ros_humble.sh
+fi
+
+if ! ls "/opt/ros" | grep -q "humble"; then
+  ./install_ros_humble.sh
+fi
+
+if ! ls "/usr/bin" | grep -q "gazebo"; then
+  ./install_gazebo.sh
+fi
+
+#Install dep and packages
 pip3 install kconfiglib
 pip3 install --upgrade gitman
 
 cd ~/git/laser_uav_system/.gitman/
-git clone git@github.com:PX4/PX4-Autopilot.git --recursive 
+git clone git@github.com:PX4/PX4-Autopilot.git -b release/1.14 --recursive 
 cd PX4-Autopilot
-git checkout 94d4dc8
 cd ~/git/laser_uav_system/ros_packages/
 ln -sf ~/git/laser_uav_system/.gitman/PX4-Autopilot ./
 
