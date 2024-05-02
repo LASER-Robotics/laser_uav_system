@@ -67,6 +67,8 @@ if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; th
   source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
 fi
 
+sudo apt install toilet
+
 toilet laser
 toilet uav
 toilet system 
