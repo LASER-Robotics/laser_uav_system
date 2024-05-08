@@ -1,6 +1,6 @@
 location: .gitman
 sources:
-  - repo: git@github.com:LASER-Robotics/Micro-XRCE-DDS-Agent.git
+  - repo: git@github.com:eProsima/Micro-XRCE-DDS-Agent.git
     name: Micro-XRCE-DDS-Agent
     rev: master
     type: git
