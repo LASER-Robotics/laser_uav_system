@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Install ROS Humble and Gazebo garden
+# Install ROS Humble and Gazebo garden
 cd ./enviroment_install
 
 if ! ls "/opt" | grep -q "ros"; then
@@ -11,33 +11,38 @@ if ! ls "/opt/ros" | grep -q "humble"; then
   ./install_ros_humble.sh
 fi
 
-# if ! ls "/usr/bin" | grep -q "gazebo"; then
-#   # ./install_gazebo.sh
-# fi
+if ! ls "/usr/bin" | grep -q "gazebo"; then
+  ./install_gazebo.sh
+fi
 
-#Install dep and packages
-# pip3 install kconfiglib
-# pip3 install --upgrade gitman
+# Install dep and packages
+pip3 install kconfiglib
+pip3 install --upgrade gitman
 
-# cd ../
-# gitman install
+cd ~/git/laser_uav_system
+gitman install
 
-# # Create workspace and create symbolic link for dirs
-# cd ~
-# mkdir laser_uav_system_ws
-# cd ~/laser_uav_system_ws
-# mkdir src
-# cd src
+# Create workspace and create symbolic link for dirs
+cd ~
+mkdir laser_uav_system_ws
+cd ~/laser_uav_system_ws
+mkdir src
+cd src
 
-# ln -sf ~/git/laser_uav_system/ros_packages/* ./
+ln -sf ~/git/laser_uav_system/ros_packages/* ./
 
-# mkdir px4_packages
-# mv micro_xrce_dds_agent ./px4_packages
-# mv px4_msgs ./px4_packages
-# mv px4_firmware ./px4_packages
+mkdir px4_packages
+mv micro_xrce_dds_agent ./px4_packages
+mv px4_msgs ./px4_packages
+mv px4_firmware ./px4_packages
 
 # Set configs of PX4
 cd ~/git/laser_uav_system/ros_packages/px4_firmware
+mkdir build && cd build
+cmake ..
+make topic_bridge_files
+make
+cd ..
 bash ./Tools/setup/ubuntu.sh
 make px4_sitl
 
