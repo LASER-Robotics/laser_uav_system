@@ -1,7 +1,19 @@
 location: .gitman
 sources:
-  - repo: git@github.com:eProsima/Micro-XRCE-DDS-Agent.git
-    name: Micro-XRCE-DDS-Agent
+  - repo: git@github.com:LASER-Robotics/px4_firmware-ROS2-.git
+    name: px4_firmware-ROS2-
+    rev: release/1.14
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/px4_firmware
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/micro_xrce_dds_agent.git
+    name: micro_xrce_dds_agent
     rev: master
     type: git
     params:
