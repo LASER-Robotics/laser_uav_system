@@ -11,8 +11,10 @@ if ! ls "/opt/ros" | grep -q "humble"; then
   ./install_ros_humble.sh
 fi
 
-if ! ls "/usr/bin" | grep -q "gazebo"; then
-  ./install_gazebo.sh
+if [ $(grep -c "REAL_UAV=True" ~/.bashrc) -ne 1 ]; then
+  if ! ls "/usr/bin" | grep -q "gazebo"; then
+    ./install_gazebo.sh
+  fi
 fi
 
 # Install dep and packages
