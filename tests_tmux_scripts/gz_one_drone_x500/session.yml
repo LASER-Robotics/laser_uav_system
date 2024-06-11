@@ -1,6 +1,6 @@
 name: simulation
 root: ~/laser_uav_system_ws/src
-startup_window: gazebo
+startup_window: free_cmd
 pre_window:
 windows:
   - gazebo:
@@ -15,5 +15,8 @@ windows:
   - free_cmd:
       layout: tiled
       panes:
-        - 'history -s ros2 topic list'
+        - 'history -s ros2 service call /uav1/arm std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /uav1/takeoff std_srvs/srv/Trigger {}'
+        - 'history -s ros2 topic pub -1 /uav1/goto geometry_msgs/msg/Pose \"{position: {x: 2.0, y: 0.0, z: 1.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}\"'
+        - sleep 3; ros2 topic echo /uav1/have_goal
 
