@@ -22,7 +22,7 @@ pip3 install kconfiglib
 pip3 install --upgrade gitman
 
 cd ~/git/laser_uav_system
-gitman install
+gitman install --force
 
 # Create workspace and create symbolic link for dirs
 cd ~
@@ -38,15 +38,8 @@ mv micro_xrce_dds_agent ./px4_packages
 mv px4_msgs ./px4_packages
 mv px4_firmware ./px4_packages
 
-# Set configs of PX4
-cd ~/git/laser_uav_system/ros_packages/px4_firmware
-mkdir build && cd build
-cmake ..
-make topic_bridge_files
-make
-cd ..
-bash ./Tools/setup/ubuntu.sh
-make px4_sitl
+# Configure simulation and px4
+./laser_uav_simulation/install.sh
 
 # Make package with comunication protocol
 cd ~/git/laser_uav_system/ros_packages/micro_xrce_dds_agent
