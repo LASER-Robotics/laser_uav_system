@@ -7,7 +7,7 @@ mkdir git
 cd git
 git clone git@github.com:LASER-Robotics/laser_uav_system.git
 cd laser_uav_system
-./install.sh" > run.sh && source.sh
+./install.sh" > run.sh && source run.sh
 ```
 
 ### X500 simulation
