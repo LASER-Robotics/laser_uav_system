@@ -2,11 +2,9 @@
 
 ```sh
 cd /tmp
-echo "cd ~
-mkdir git
-cd git
+echo "mkdir ~/git && cd ~/git
 git clone git@github.com:LASER-Robotics/laser_uav_system.git
-cd laser_uav_system
+cd ~/git/laser_uav_system
 ./install.sh" > run.sh && source run.sh
 ```
 
