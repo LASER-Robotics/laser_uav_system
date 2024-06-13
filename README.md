@@ -1,7 +1,7 @@
 # laser_uav_system
 
 ```sh
-cd tmp
+cd /tmp
 echo "cd ~
 mkdir git
 cd git
