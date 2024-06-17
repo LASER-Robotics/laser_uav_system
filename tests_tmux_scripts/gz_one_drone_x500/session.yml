@@ -7,7 +7,7 @@ windows:
       layout: even-horizontal
       panes:
         - cd $(ros2 pkg prefix laser_uav_simulation --share)/scripts; python3 jinja_gen.py $UAV_NAME $UAV_TYPE;
-          sleep 1; cd ~/git/laser_uav_system/ros_packages/px4_firmware; make px4_sitl gazebo-classic_${UAV_TYPE}
+          sleep 1; cd ~/git/laser_uav_system/ros_packages/px4_firmware; make px4_sitl gazebo-classic_$UAV_TYPE
         - sleep 3; MicroXRCEAgent udp4 -p 8888
   - api:
       layout: even-horizontal
