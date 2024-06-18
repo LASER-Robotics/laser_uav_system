@@ -2,3 +2,4 @@
 .catkin_tools
 .swo
 .swp
+.tmuxinator.yml
