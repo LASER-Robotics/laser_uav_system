@@ -18,8 +18,9 @@ if [ $(grep -c "REAL_UAV=True" ~/.bashrc) -ne 1 ]; then
 fi
 
 # Install dep and packages
+sudo apt install pip
 pip3 install kconfiglib
-pip3 install --upgrade gitman
+sudo pip3 install --upgrade gitman
 
 cd ~/git/laser_uav_system
 gitman install --force
