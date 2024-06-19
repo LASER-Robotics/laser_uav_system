@@ -19,7 +19,8 @@ sudo apt install python3-colcon-clean -y
 sudo apt install python3-colcon-common-extensions
 sudo apt install ros-humble-eigen3-cmake-module
 
-pip install --user -U empy pyros-genmsg setuptools
+pip install --user -U empy==3.3.5 pyros-genmsg setuptools
+pip install -U colcon-common-extensions
 
 if [ $(grep -c "/opt/ros/humble/setup.bash" ~/.bashrc) -ne 1 ]; then
   source /opt/ros/humble/setup.bash && echo -e "\n# source ROS Humble\n source /opt/ros/humble/setup.bash" >> ~/.bashrc
