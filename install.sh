@@ -56,7 +56,7 @@ cd ~/laser_uav_system_ws
 sudo rosdep init 
 rosdep update
 rosdep install -i --from-path src --rosdistro humble -y
-colcon build --symlink-install --packages-skip px4 microxrcedds_agent realsense2_camera 
+colcon build --symlink-install --packages-skip px4 microxrcedds_agent
 
 if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
   source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
