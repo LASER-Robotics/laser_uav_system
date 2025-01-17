@@ -20,4 +20,10 @@ windows:
         - 'history -s ros2 service call /uav1/takeoff std_srvs/srv/Trigger {}'
         - 'history -s ros2 topic pub -1 /uav1/goto geometry_msgs/msg/Pose \"{position: {x: 2.0, y: 0.0, z: 1.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}\"'
         - sleep 3; ros2 topic echo /uav1/have_goal
+  - free_cmd:
+      layout: tiled
+      panes:
+        - ros2 launch summer_school_hackathon waypoint.launch.py
+        - 'history -s ros2 service call /start_state_machine std_srvs/srv/Trigger {}'
+        - sleep 5; ros2 topic echo /uav1/goto
 

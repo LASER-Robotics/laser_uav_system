@@ -19,6 +19,7 @@ fi
 
 # Install dep and packages
 sudo apt install pip
+pip install packaging==24.2
 pip3 install kconfiglib
 sudo pip3 install --upgrade gitman
 
