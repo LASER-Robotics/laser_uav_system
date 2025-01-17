@@ -34,10 +34,8 @@ cd src
 
 ln -sf ~/git/laser_uav_system/ros_packages/* ./
 
-mkdir px4_packages
-mv micro_xrce_dds_agent ./px4_packages
-mv px4_msgs ./px4_packages
-mv px4_firmware ./px4_packages
+rm micro_xrce_dds_agent
+rm px4_firmware
 
 # Configure simulation and px4
 ./laser_uav_simulation/install.sh
@@ -56,7 +54,7 @@ cd ~/laser_uav_system_ws
 sudo rosdep init 
 rosdep update
 rosdep install -i --from-path src --rosdistro humble -y
-colcon build --symlink-install --packages-skip px4 microxrcedds_agent
+colcon build --symlink-install
 
 if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
   source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
