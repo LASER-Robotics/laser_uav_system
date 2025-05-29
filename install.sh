@@ -61,6 +61,21 @@ if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; th
   source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
 fi
 
+# Acados installation solver of nmpc
+cd ~/laser_uav_system_ws/src/laser_uav_controllers/
+git submodule update --recursive --init
+cd acados
+git submodule update --recursive --init
+mkdir -p build
+cd build
+cmake -DACADOS_WITH_QPOASES=ON ..
+make install -j4
+
+if [ $(grep -c "ACADOS_SOURCE_DIR" ~/.bashrc) -ne 1 ]; then
+  echo -e "\n\n#set acados solver of nmpc \nexport ACADOS_SOURCE_DIR="~/laser_uav_system_ws/src/laser_uav_controllers/acados"" >> ~/.bashrc
+  echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/laser_uav_system_ws/src/laser_uav_controllers/acados/lib"" >> ~/.bashrc
+fi
+
 sudo apt install toilet
 
 toilet laser

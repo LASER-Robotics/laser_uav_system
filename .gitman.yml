@@ -48,6 +48,54 @@ sources:
         target: ros_packages/laser_uav_px4_api
     scripts:
       - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_managers.git
+    name: laser_uav_managers
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_managers
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_controllers.git
+    name: laser_uav_controllers
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_controllers
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_planner.git
+    name: laser_uav_planner
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_planner
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_msgs.git
+    name: laser_msgs
+    rev: ros2
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_msgs
+    scripts:
+      - git submodule update --init --recursive
   - repo: git@github.com:LASER-Robotics/laser_uav_simulation.git
     name: laser_uav_simulation
     rev: main
