@@ -36,11 +36,12 @@ cd src
 
 ln -sf ~/git/laser_uav_system/ros_packages/* ./
 
+cd px4_firmware
+make distclean
+make px4_sitl gazebo-classic
+
 rm micro_xrce_dds_agent
 rm px4_firmware
-
-# Configure simulation and px4
-./laser_uav_simulation/install.sh
 
 # Make package with comunication protocol
 cd ~/git/laser_uav_system/ros_packages/micro_xrce_dds_agent
