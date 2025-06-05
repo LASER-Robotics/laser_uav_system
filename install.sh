@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ $(grep -c "real_uav" ~/.bashrc) -ne 1 ]; then
+  resp=""
+  [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav or simulation (true, false):\e[0m\n' resp ; }
+  echo -e "export real_uav=\""$resp"\"" >> ~/.bashrc
+fi
+
 # Install ROS Humble and Gazebo garden
 cd ./enviroment_install
 
