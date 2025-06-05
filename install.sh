@@ -11,9 +11,10 @@ if ! ls "/opt/ros" | grep -q "humble"; then
   ./install_ros_humble.sh
 fi
 
-if [ $(grep -c "REAL_UAV=True" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "real_uav=true" ~/.bashrc) -ne 1 ]; then
   if ! ls "/usr/bin" | grep -q "gazebo"; then
     ./install_gazebo.sh
+    sudo apt install ros-humble-gazebo-* -y
   fi
 fi
 
@@ -73,6 +74,12 @@ if [ $(grep -c "uav_type" ~/.bashrc) -ne 1 ]; then
   echo -e "export uav_type=\""$resp"\"" >> ~/.bashrc
 fi
 
+if [ $(grep -c "uav_sensors" ~/.bashrc) -ne 1 ]; then
+  resp=""
+  [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav sensors (ex: --enable_vio --enable_d435i_down --enable_ground_truth ....):\e[0m\n' resp ; }
+  echo -e "export uav_sensors=\""$resp"\" # available sensors: --enable_vio, --enable_d435i_down --enable_d435i_front --enable_ground_truth" >> ~/.bashrc
+fi
+
 # Acados installation solver of nmpc
 cd ~/laser_uav_system_ws/src/laser_uav_controllers/
 git submodule update --recursive --init
@@ -86,6 +93,12 @@ make install -j4
 if [ $(grep -c "ACADOS_SOURCE_DIR" ~/.bashrc) -ne 1 ]; then
   echo -e "#set acados solver of nmpc \nexport ACADOS_SOURCE_DIR="~/laser_uav_system_ws/src/laser_uav_controllers/acados"" >> ~/.bashrc
   echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/laser_uav_system_ws/src/laser_uav_controllers/acados/lib"" >> ~/.bashrc
+fi
+
+if [ $(grep -c "GAZEBO_PLUGIN_PATH" ~/.bashrc) -ne 1 ]; then
+  echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
+  echo -e "export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
+  echo -e "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models" >> ~/.bashrc
 fi
 
 sudo apt install toilet

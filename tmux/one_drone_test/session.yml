@@ -1,14 +1,14 @@
 name: simulation
 root: ~/laser_uav_system_ws/src
 startup_window: control
-pre_window: export PX4_NO_FOLLOW_MODE=1; export UAV_NAME=uav1; export UAV_TYPE=x500 PX4_SITL_WORLD=custom_empty
+pre_window: export uav_name=uav1; export uav_type=x500; export uav_sensors="--enable_vio --enable_ground_truth"
 windows:
   - gazebo:
       layout: even-horizontal
       panes:
-        - cd ~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/scripts; ./jinja_gen.py $UAV_NAME $UAV_TYPE;
-          sleep 1; cd ~/git/laser_uav_system/ros_packages/px4_firmware; PX4_UXRCE_DDS_NS=$uav_name make px4_sitl gazebo-classic_$UAV_TYPE
-        - sleep 3; MicroXRCEAgent udp4 -p 8888
+        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 0.0
+        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/start_uxrce_protocol.sh
+        - gazebo -s libgazebo_ros_init.so -s libgazebo_ros_factory.so
   - api:
       layout: even-horizontal
       panes:
@@ -64,6 +64,6 @@ windows:
   - free_cmd:
       layout: even-horizontal
       panes:
-        - sleep 5; ros2 topic echo /odom --no-arr
+        - sleep 9; ros2 topic echo /$uav_name/ground_truth --no-arr
         - sleep 5; ros2 topic echo /$uav_name/estimation_manager/estimation --no-arr
 
