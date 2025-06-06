@@ -2,7 +2,7 @@
 
 if [ $(grep -c "real_uav" ~/.bashrc) -ne 1 ]; then
   resp=""
-  [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav or simulation (true, false):\e[0m\n' resp ; }
+  [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav? or simulation (true, false):\e[0m\n' resp ; }
   echo -e "export real_uav=\""$resp"\"" >> ~/.bashrc
 fi
 
@@ -31,6 +31,13 @@ pip3 install kconfiglib
 sudo pip3 install --upgrade gitman
 
 cd ~/git/laser_uav_system
+
+if [ $(grep -c "real_uav=true" ~/.bashrc) -ne 1 ]; then
+  cp .gitman_simulation.yml ./.gitman.yml
+else
+  cp .gitman_real_uav.yml ./.gitman.yml
+fi
+
 gitman install --force
 
 # Create workspace and create symbolic link for dirs
@@ -42,13 +49,17 @@ cd src
 
 ln -sf ~/git/laser_uav_system/ros_packages/* ./
 
-cd px4_firmware
-make distclean
-make px4_sitl gazebo-classic
+if [ $(grep -c "real_uav=true" ~/.bashrc) -ne 1 ]; then
+  cd px4_firmware
+  make distclean
+  make px4_sitl_default 
+  cd build/px4_sitl_default/build_gazebo-classic
+  cmake ../../../Tools/simulation/gazebo-classic/sitl_gazebo-classic
+  make
+  rm px4_firmware
+fi
 
 rm micro_xrce_dds_agent
-rm px4_firmware
-
 # Make package with comunication protocol
 cd ~/git/laser_uav_system/ros_packages/micro_xrce_dds_agent
 mkdir build
@@ -57,13 +68,6 @@ cmake ..
 make
 sudo make install
 sudo ldconfig /usr/local/lib/
-
-# Build workspace
-cd ~/laser_uav_system_ws
-sudo rosdep init 
-rosdep update
-rosdep install -i --from-path src --rosdistro humble -y
-colcon build --symlink-install
 
 if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
   source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
@@ -103,10 +107,18 @@ if [ $(grep -c "ACADOS_SOURCE_DIR" ~/.bashrc) -ne 1 ]; then
 fi
 
 if [ $(grep -c "GAZEBO_PLUGIN_PATH" ~/.bashrc) -ne 1 ]; then
-  echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
-  echo -e "export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
-  echo -e "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models" >> ~/.bashrc
+  echo -e "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
+  echo -e "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models" >> ~/.bashrc
 fi
+
+source ~/.bashrc
+
+# Build workspace
+cd ~/laser_uav_system_ws
+sudo rosdep init 
+rosdep update
+rosdep install -i --from-path src --rosdistro humble -y
+colcon build --symlink-install
 
 sudo apt install toilet
 
