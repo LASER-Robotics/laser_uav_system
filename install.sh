@@ -56,6 +56,7 @@ if [ $(grep -c "real_uav=true" ~/.bashrc) -ne 1 ]; then
   cd build/px4_sitl_default/build_gazebo-classic
   cmake ../../../Tools/simulation/gazebo-classic/sitl_gazebo-classic
   make
+  cd ~/laser_uav_system_ws/src
   rm px4_firmware
 fi
 
