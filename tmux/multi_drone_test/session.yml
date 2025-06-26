@@ -1,0 +1,72 @@
+name: simulation
+root: ~/laser_uav_system_ws/src
+startup_window: control
+windows:
+  - spawn:
+      layout: even-horizontal
+      panes:
+        - export uav_name=uav1; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 0.0 0
+        - export uav_name=uav2; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 1.0 0.0 0.2 0.0 1
+        - export uav_name=uav3; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 1.0 1.0 0.2 0.0 2
+        - export uav_name=uav4; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 1.0 0.2 0.0 3
+        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/start_uxrce_protocol.sh
+  - gazebo:
+      layout: even-horizontal
+      panes:
+        - gazebo -s libgazebo_ros_init.so -s libgazebo_ros_factory.so
+  - api:
+      layout: tiled
+      panes:
+        - sleep 1; export uav_name=uav1; ros2 launch laser_uav_px4_api api.launch.py
+        - sleep 1; export uav_name=uav2; ros2 launch laser_uav_px4_api api.launch.py
+        - sleep 1; export uav_name=uav3; ros2 launch laser_uav_px4_api api.launch.py
+        - sleep 1; export uav_name=uav4; ros2 launch laser_uav_px4_api api.launch.py
+  - control:
+      layout: tiled
+      panes:
+        - sleep 1; export uav_name=uav1; ros2 launch laser_uav_managers control_manager.launch.py
+        - sleep 1; export uav_name=uav2; ros2 launch laser_uav_managers control_manager.launch.py
+        - sleep 1; export uav_name=uav3; ros2 launch laser_uav_managers control_manager.launch.py
+        - sleep 1; export uav_name=uav4; ros2 launch laser_uav_managers control_manager.launch.py
+  - arm:
+      layout: tiled
+      panes:
+        - 'history -s ros2 service call /uav1/px4_api/arm std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /uav2/px4_api/arm std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /uav3/px4_api/arm std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /uav4/px4_api/arm std_srvs/srv/Trigger {}'
+  - takeoff:
+      layout: tiled
+      panes:
+        - 'history -s ros2 service call /uav1/control_manager/takeoff std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /uav2/control_manager/takeoff std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /uav3/control_manager/takeoff std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /uav4/control_manager/takeoff std_srvs/srv/Trigger {}'
+  - trajectories:
+      layout: tiled
+      panes:
+        - 'history -s ros2 topic pub -1 /uav1/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 2.0, waypoints: [
+          {position: {x: 6.0, y: 0.0, z: 2.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 6.0, y: 6.0, z: 2.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 0.0, y: 6.0, z: 2.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 0.0, y: 0.0, z: 2.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}
+        ]}\"'
+        - 'history -s ros2 topic pub -1 /uav2/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 2.0, waypoints: [
+          {position: {x: 6.0, y: 0.0, z: 4.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 6.0, y: 6.0, z: 4.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 0.0, y: 6.0, z: 4.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 0.0, y: 0.0, z: 4.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}
+        ]}\"'
+        - 'history -s ros2 topic pub -1 /uav3/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 2.0, waypoints: [
+          {position: {x: 6.0, y: 0.0, z: 6.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 6.0, y: 6.0, z: 6.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 0.0, y: 6.0, z: 6.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 0.0, y: 0.0, z: 6.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}
+        ]}\"'
+        - 'history -s ros2 topic pub -1 /uav4/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 2.0, waypoints: [
+          {position: {x: 6.0, y: 0.0, z: 8.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 6.0, y: 6.0, z: 8.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 0.0, y: 6.0, z: 8.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 0.0, y: 0.0, z: 8.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}
+        ]}\"'
+

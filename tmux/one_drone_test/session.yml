@@ -1,13 +1,16 @@
 name: simulation
 root: ~/laser_uav_system_ws/src
 startup_window: control
-pre_window: export uav_name=uav1; export uav_type=x500; export uav_sensors="--enable_vio --enable_ground_truth"
+pre_window: export uav_name=uav7; export uav_type=x500; export uav_sensors=""
 windows:
+  - spawn:
+      layout: even-horizontal
+      panes:
+        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 0.0 3
+        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/start_uxrce_protocol.sh
   - gazebo:
       layout: even-horizontal
       panes:
-        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 0.0
-        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/start_uxrce_protocol.sh
         - gazebo -s libgazebo_ros_init.so -s libgazebo_ros_factory.so
   - api:
       layout: even-horizontal
