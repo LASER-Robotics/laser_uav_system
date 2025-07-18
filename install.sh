@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ $(grep -c "real_uav" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "REAL_UAV" ~/.bashrc) -ne 1 ]; then
   resp=""
   [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav? or simulation (true, false):\e[0m\n' resp ; }
-  echo -e "export real_uav=\""$resp"\"" >> ~/.bashrc
+  echo -e "export REAL_UAV=\""$resp"\"" >> ~/.bashrc
 fi
 
 # Install ROS Humble and Gazebo garden
@@ -17,7 +17,7 @@ if ! ls "/opt/ros" | grep -q "humble"; then
   ./install_ros_humble.sh
 fi
 
-if [ $(grep -c "real_uav=true" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
   if ! ls "/usr/bin" | grep -q "gazebo"; then
     ./install_gazebo.sh
     sudo apt install ros-humble-gazebo-* -y
@@ -32,7 +32,7 @@ sudo pip3 install --upgrade gitman
 
 cd ~/git/laser_uav_system
 
-if [ $(grep -c "real_uav=true" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
   cp .gitman_simulation.yml ./.gitman.yml
 else
   cp .gitman_real_uav.yml ./.gitman.yml
@@ -49,7 +49,7 @@ cd src
 
 ln -sf ~/git/laser_uav_system/ros_packages/* ./
 
-if [ $(grep -c "real_uav=true" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
   cd px4_firmware
   make distclean
   make px4_sitl_default 
@@ -74,22 +74,28 @@ if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; th
   source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
 fi
 
-if [ $(grep -c "uav_name" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "UAV_NAME" ~/.bashrc) -ne 1 ]; then
   resp=""
   [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav name :\e[0m\n' resp ; }
-  echo -e "export uav_name=\""$resp"\"" >> ~/.bashrc
+  echo -e "export UAV_NAME=\""$resp"\"" >> ~/.bashrc
 fi
 
-if [ $(grep -c "uav_type" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "UAV_TYPE" ~/.bashrc) -ne 1 ]; then
   resp=""
   [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav type :\e[0m\n' resp ; }
-  echo -e "export uav_type=\""$resp"\"" >> ~/.bashrc
+  echo -e "export UAV_TYPE=\""$resp"\"" >> ~/.bashrc
 fi
 
-if [ $(grep -c "uav_sensors" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "UAV_SENSORS" ~/.bashrc) -ne 1 ]; then
   resp=""
   [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav sensors (ex: --enable_vio --enable_d435i_down --enable_ground_truth ....):\e[0m\n' resp ; }
-  echo -e "export uav_sensors=\""$resp"\" # available sensors: --enable_vio, --enable_d435i_down --enable_d435i_front --enable_ground_truth" >> ~/.bashrc
+  echo -e "export UAV_SENSORS=\""$resp"\" # available sensors: --enable_vio, --enable_d435i_down --enable_d435i_front --enable_ground_truth" >> ~/.bashrc
+fi
+
+if [ $(grep -c "UAV_ESTIMATION_SOURCE" ~/.bashrc) -ne 1 ]; then
+  resp=""
+  [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav estimation source (ex: GNSS, VIO, LIO):\e[0m\n' resp ; }
+  echo -e "export UAV_ESTIMATION_SOURCE=\""$resp"\" # available estimation sources: GNSS, VIO, LIO" >> ~/.bashrc
 fi
 
 # Acados installation solver of nmpc

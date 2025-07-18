@@ -5,10 +5,10 @@ windows:
   - spawn:
       layout: even-horizontal
       panes:
-        - export uav_name=uav1; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 0.0 0
-        - export uav_name=uav2; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 1.0 0.0 0.2 0.0 1
-        - export uav_name=uav3; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 1.0 1.0 0.2 0.0 2
-        - export uav_name=uav4; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 1.0 0.2 0.0 3
+        - export UAV_NAME=uav1; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 0.0 0
+        - export UAV_NAME=uav2; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 1.0 0.0 0.2 0.0 1
+        - export UAV_NAME=uav3; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 1.0 1.0 0.2 0.0 2
+        - export UAV_NAME=uav4; ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 1.0 0.2 0.0 3
         - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/start_uxrce_protocol.sh
   - gazebo:
       layout: even-horizontal
@@ -17,17 +17,17 @@ windows:
   - api:
       layout: tiled
       panes:
-        - sleep 1; export uav_name=uav1; ros2 launch laser_uav_px4_api api.launch.py
-        - sleep 1; export uav_name=uav2; ros2 launch laser_uav_px4_api api.launch.py
-        - sleep 1; export uav_name=uav3; ros2 launch laser_uav_px4_api api.launch.py
-        - sleep 1; export uav_name=uav4; ros2 launch laser_uav_px4_api api.launch.py
+        - sleep 1; export UAV_NAME=uav1; ros2 launch laser_uav_px4_api api.launch.py
+        - sleep 1; export UAV_NAME=uav2; ros2 launch laser_uav_px4_api api.launch.py
+        - sleep 1; export UAV_NAME=uav3; ros2 launch laser_uav_px4_api api.launch.py
+        - sleep 1; export UAV_NAME=uav4; ros2 launch laser_uav_px4_api api.launch.py
   - control:
       layout: tiled
       panes:
-        - sleep 1; export uav_name=uav1; ros2 launch laser_uav_managers control_manager.launch.py
-        - sleep 1; export uav_name=uav2; ros2 launch laser_uav_managers control_manager.launch.py
-        - sleep 1; export uav_name=uav3; ros2 launch laser_uav_managers control_manager.launch.py
-        - sleep 1; export uav_name=uav4; ros2 launch laser_uav_managers control_manager.launch.py
+        - sleep 1; export UAV_NAME=uav1; ros2 launch laser_uav_managers control_manager.launch.py
+        - sleep 1; export UAV_NAME=uav2; ros2 launch laser_uav_managers control_manager.launch.py
+        - sleep 1; export UAV_NAME=uav3; ros2 launch laser_uav_managers control_manager.launch.py
+        - sleep 1; export UAV_NAME=uav4; ros2 launch laser_uav_managers control_manager.launch.py
   - arm:
       layout: tiled
       panes:

@@ -1,7 +1,7 @@
 name: simulation
 root: ~/laser_uav_system_ws/src
 startup_window: control
-pre_window: export uav_name=uav7; export uav_type=x500; export uav_sensors=""
+pre_window: export UAV_NAME=uav7; export UAV_TYPE=x500; export UAV_SENSORS=""; export UAV_ESTIMATION_SOURCE="GNSS"
 windows:
   - spawn:
       layout: even-horizontal
@@ -20,19 +20,21 @@ windows:
       layout: tiled
       panes:
         - sleep 1; ros2 launch laser_uav_managers control_manager.launch.py
-        - 'history -s ros2 service call /$uav_name/px4_api/arm std_srvs/srv/Trigger {}'
-        - 'history -s ros2 service call /$uav_name/control_manager/takeoff std_srvs/srv/Trigger {}'
-        - 'history -s ros2 service call /$uav_name/control_manager/land std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /$UAV_NAME/px4_api/arm std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /$UAV_NAME/control_manager/takeoff std_srvs/srv/Trigger {}'
+        - 'history -s ros2 service call /$UAV_NAME/control_manager/land std_srvs/srv/Trigger {}'
   - trajectories:
       layout: tiled
       panes:
-        - 'history -s ros2 topic pub -1 /$uav_name/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 1.0, waypoints: [
-          {position: {x: 6.0, y: 0.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
-          {position: {x: 6.0, y: 6.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
-          {position: {x: 0.0, y: 6.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 0.5, waypoints: [
+          {position: {x: 1.0, y: 1.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 1.0, y: -1.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: -1.0, y: -1.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: -1.0, y: 1.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
+          {position: {x: 1.0, y: 1.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
           {position: {x: 0.0, y: 0.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}
         ]}\"'
-        - 'history -s ros2 topic pub -1 /$uav_name/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 4.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 4.0, waypoints: [
           {position: {x: 3.0, y: 0.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, 
           {position: {x: 6.0, y: 1.5, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},  
           {position: {x: 3.0, y: 3.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, 
@@ -43,7 +45,7 @@ windows:
           {position: {x: 6.0, y: 4.5, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},  
           {position: {x: 3.0, y: 3.0, z: 3.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}   
         ]}\"'
-        - 'history -s ros2 topic pub -1 /$uav_name/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 6.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 6.0, waypoints: [
           {position: {x: -0.90, y: -1.27, z: 3.48}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
           {position: {x: 9.09, y: 6.26, z: 1.08}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
           {position: {x: 9.27, y: -3.46, z: 1.17}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}},
@@ -63,10 +65,10 @@ windows:
   - free_cmd:
       layout: tiled
       panes:
-        - 'history -s ros2 topic pub -1 /$uav_name/control_manager/goto geometry_msgs/msg/Pose \"{position: {x: 0.0, y: 0.0, z: 1.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}\"'
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/goto geometry_msgs/msg/Pose \"{position: {x: 0.0, y: 0.0, z: 1.5}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}\"'
   - free_cmd:
       layout: even-horizontal
       panes:
-        - sleep 9; ros2 topic echo /$uav_name/ground_truth --no-arr
-        - sleep 5; ros2 topic echo /$uav_name/estimation_manager/estimation --no-arr
+        - sleep 9; ros2 topic echo /$UAV_NAME/ground_truth --no-arr
+        - sleep 5; ros2 topic echo /$UAV_NAME/estimation_manager/estimation --no-arr
 
