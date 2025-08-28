@@ -50,12 +50,8 @@ cd src
 ln -sf ~/git/laser_uav_system/ros_packages/* ./
 
 if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
-  cd px4_firmware
-  make distclean
-  make px4_sitl_default 
-  cd build/px4_sitl_default/build_gazebo-classic
-  cmake ../../../Tools/simulation/gazebo-classic/sitl_gazebo-classic
-  make
+  cd laser_uav_simulation/scripts
+  ./build_px4_firmware.sh
   cd ~/laser_uav_system_ws/src
   rm px4_firmware
 fi

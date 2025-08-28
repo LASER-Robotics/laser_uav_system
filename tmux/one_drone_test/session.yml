@@ -1,12 +1,12 @@
 name: simulation
 root: ~/laser_uav_system_ws/src
 startup_window: control
-pre_window: export UAV_NAME=uav7; export UAV_TYPE=x500; export UAV_SENSORS=""; export UAV_ESTIMATION_SOURCE="GNSS"
+pre_window: export UAV_NAME=uav7; export UAV_TYPE=x500; export UAV_SENSORS="--enable_vio"; export UAV_ESTIMATION_SOURCE="GNSS"
 windows:
   - spawn:
       layout: even-horizontal
       panes:
-        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 0.0 3
+        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 1.57 3
         - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/start_uxrce_protocol.sh
   - gazebo:
       layout: even-horizontal

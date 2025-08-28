@@ -2,7 +2,7 @@ location: .gitman
 sources:
   - repo: git@github.com:LASER-Robotics/px4_firmware-ROS2-.git
     name: px4_firmware-ROS2-
-    rev: release/1.14
+    rev: release/1.15
     type: git
     params:
     sparse_paths:
