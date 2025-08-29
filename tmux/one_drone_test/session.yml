@@ -70,5 +70,5 @@ windows:
       layout: even-horizontal
       panes:
         - sleep 9; ros2 topic echo /$UAV_NAME/ground_truth --no-arr
-        - sleep 5; ros2 topic echo /$UAV_NAME/estimation_manager/estimation --no-arr
+        - sleep 9; ros2 topic echo /$UAV_NAME/px4_api/odometry --no-arr
 
