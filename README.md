@@ -1,4 +1,4 @@
-# Laser Uav System [LUS]
+# LASER UAV System [LUS]
 
 [![Build Status](httpsa://github.com/LASER-Robotics/laser_uav_system/actions/workflows/main.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
