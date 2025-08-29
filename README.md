@@ -32,7 +32,7 @@ Ensure you have the following software installed:
 
 ### Installation
 
-We recommed that you install our linux setup para melhor usabilidade do nosso sistema se voce desejar instalar o linux setup junto ao sistema copie o cole o trecho abaixo no seu terminal, para isso recomendamos um ubuntu recem formatado
+We recommend installing our Linux setup for better usability of our system. If you would like to install the setup along with the system, please copy and paste the command below into your terminal. For this, we recommend a **freshly formatted Ubuntu installation**.
 
 ```sh
 cd /tmp
