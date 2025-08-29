@@ -8,6 +8,13 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  REAL_UAV: "false"
+  UAV_NAME: "uav1"
+  UAV_TYPE: "x500"
+  UAV_SENSOR: ""
+  UAV_ESTIMATION_SOURCE: "GNSS"
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -15,6 +22,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup ROS 2 Humble
+        uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: humble
 
       - name: Execute install.sh
         run: ./install.sh
