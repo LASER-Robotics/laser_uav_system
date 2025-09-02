@@ -108,6 +108,18 @@ sources:
         target: ros_packages/laser_uav_simulation
     scripts:
       - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_gazebo_resources.git
+    name: laser_gazebo_resources
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_gazebo_resources
+    scripts:
+      - git submodule update --init --recursive
 sources_locked:
 groups:
   -
