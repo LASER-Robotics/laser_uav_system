@@ -33,12 +33,10 @@ sudo pip3 install --upgrade gitman
 cd ~/git/laser_uav_system
 
 if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
-  cp .gitman_simulation.yml ./.gitman.yml
+  gitman install -g simulation --force
 else
-  cp .gitman_real_uav.yml ./.gitman.yml
+  gitman install -g real --force
 fi
-
-gitman install --force
 
 # Create workspace and create symbolic link for dirs
 cd ~
@@ -114,6 +112,15 @@ if [ $(grep -c "GAZEBO_PLUGIN_PATH" ~/.bashrc) -ne 1 ]; then
   echo -e "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
   echo -e "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models" >> ~/.bashrc
 fi
+
+# Autodiff for EKF
+cd ~/laser_uav_system_ws/src/laser_uav_estimators/
+git submodule update --recursive --init
+cd autodiff
+mkdir -p build
+cd build
+cmake -DAUTODIFF_BUILD_TESTS=OFF -DAUTODIFF_BUILD_PYTHON=OFF ..
+make install -j4
 
 source ~/.bashrc
 
