@@ -1,0 +1,174 @@
+location: .gitman
+sources:
+  - repo: git@github.com:LASER-Robotics/px4_firmware-ROS2-.git
+    name: px4_firmware-ROS2-
+    rev: release/1.15
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/px4_firmware
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/micro_xrce_dds_agent.git
+    name: micro_xrce_dds_agent
+    rev: master
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/micro_xrce_dds_agent
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/px4_msgs.git
+    name: px4_msgs
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/px4_msgs
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_px4_api.git
+    name: laser_uav_px4_api
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_px4_api
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_managers.git
+    name: laser_uav_managers
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_managers
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_controllers.git
+    name: laser_uav_controllers
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_controllers
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_planners.git
+    name: laser_uav_planners
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_planners
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_msgs.git
+    name: laser_msgs
+    rev: ros2
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_msgs
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_simulation.git
+    name: laser_uav_simulation
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_simulation
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_gazebo_resources.git
+    name: laser_gazebo_resources
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_gazebo_resources
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_estimators.git
+    name: laser_uav_estimators
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_estimators
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_lib.git
+    name: laser_uav_lib
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_lib
+    scripts:
+      - git submodule update --init --recursive
+sources_locked:
+groups:
+  - name: simulation
+    members:
+      - laser_uav_px4_api
+      - laser_uav_managers
+      - laser_uav_controllers
+      - laser_uav_estimators
+      - laser_uav_planners
+      - laser_msgs
+      - laser_uav_lib
+      - laser_uav_simulation
+      - laser_gazebo_resources
+      - px4_firmware-ROS2-
+      - micro_xrce_dds_agent
+      - px4_msgs
+  - name: real
+    members:
+      - laser_uav_px4_api
+      - laser_uav_managers
+      - laser_uav_controllers
+      - laser_uav_estimators
+      - laser_uav_planners
+      - laser_msgs
+      - laser_uav_lib
+      - micro_xrce_dds_agent
+      - px4_msgs
+default_group: ''
