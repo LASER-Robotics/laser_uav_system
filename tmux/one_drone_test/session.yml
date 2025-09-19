@@ -23,7 +23,7 @@ windows:
   - control:
       layout: tiled
       panes:
-        - sleep 1; ros2 launch laser_uav_managers control_manager.launch.py nmpc_controller_file:="./configs/control.yaml"
+        - sleep 1; ros2 launch laser_uav_managers control_manager.launch.py nmpc_controller_file:="./configs/control.yaml" agile_planner_file:="./configs/planner.yaml"
         - 'history -s ros2 service call /$UAV_NAME/px4_api/arm std_srvs/srv/Trigger {}'
         - 'history -s ros2 service call /$UAV_NAME/control_manager/takeoff std_srvs/srv/Trigger {}'
         - 'history -s ros2 service call /$UAV_NAME/control_manager/land std_srvs/srv/Trigger {}'

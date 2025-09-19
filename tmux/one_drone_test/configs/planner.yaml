@@ -1,0 +1,31 @@
+/**:
+  ros__parameters:
+    agile_planner:
+      quadrotor_parameters:
+        # This is a = F / M. F is maximum total thrust available
+        max_acc: 30.0 
+
+        # This is the maximum speed
+        max_vel: 16.0
+
+      ltd_opt:
+        use_drag: false
+        thrust_decomp_acc_precision: 0.01
+        thrust_decomp_max_iter: 20
+
+      first_vel_opt:
+        alpha: 10.0
+        alpha_reduction_factor: 0.2
+        alpha_min_threshold: 0.001
+        max_iter: 30
+
+      second_vel_opt:
+        run: true
+        alpha: 35.0
+        alpha_reduction_factor: 0.1
+        alpha_min_threshold: 0.01
+        max_iter: 10
+
+      time:
+        dt_precision: 0.001
+        sampling_step: 0.0070 # DON'T CHANGE
