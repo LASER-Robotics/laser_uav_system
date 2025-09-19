@@ -1,12 +1,12 @@
 name: simulation
-root: ~/laser_uav_system_ws/src
+root: ./
 startup_window: control
-pre_window: export UAV_NAME=uav7; export UAV_TYPE=x500; export UAV_SENSORS="--enable_vio"; export UAV_ESTIMATION_SOURCE="GNSS"
+pre_window: export UAV_NAME=uav1; export UAV_TYPE=x500; export UAV_SENSORS="--ground_thruth"; export UAV_ESTIMATION_SOURCE="EstimationManager"
 windows:
   - spawn:
       layout: even-horizontal
       panes:
-        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 1.57 3
+        - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 0.0 3
         - ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/start_uxrce_protocol.sh
   - gazebo:
       layout: even-horizontal
@@ -15,11 +15,15 @@ windows:
   - api:
       layout: even-horizontal
       panes:
-        - sleep 1; ros2 launch laser_uav_px4_api api.launch.py
+        - sleep 1; ros2 launch laser_uav_px4_api api.launch.py api_file:="./configs/api.yaml"
+  - estimator:
+      layout: tiled
+      panes:
+          - sleep 1; ros2 launch laser_uav_managers estimation_manager.launch.py
   - control:
       layout: tiled
       panes:
-        - sleep 1; ros2 launch laser_uav_managers control_manager.launch.py
+        - sleep 1; ros2 launch laser_uav_managers control_manager.launch.py nmpc_controller_file:="./configs/control.yaml"
         - 'history -s ros2 service call /$UAV_NAME/px4_api/arm std_srvs/srv/Trigger {}'
         - 'history -s ros2 service call /$UAV_NAME/control_manager/takeoff std_srvs/srv/Trigger {}'
         - 'history -s ros2 service call /$UAV_NAME/control_manager/land std_srvs/srv/Trigger {}'
@@ -70,6 +74,6 @@ windows:
   - free_cmd:
       layout: even-horizontal
       panes:
-        - sleep 9; ros2 topic echo /$UAV_NAME/ground_truth --no-arr
+        - sleep 9; ros2 topic echo /$UAV_NAME/estimation_manager/estimation --no-arr
         - sleep 9; ros2 topic echo /$UAV_NAME/px4_api/odometry --no-arr
 

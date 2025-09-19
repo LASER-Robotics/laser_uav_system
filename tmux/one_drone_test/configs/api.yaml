@@ -1,0 +1,8 @@
+/**:
+  ros__parameters:
+    rate: # [Hz]
+      pub_offboard_control_mode: 100.0
+      pub_api_diagnostic: 10.0
+
+    control_input_mode: "individual_thrust" # individual_thrust or angular_rates_and_thrust
+    # control_input_mode: "angular_rates_and_thrust" # individual_thrust or angular_rates_and_thrust
