@@ -33,9 +33,9 @@ sudo pip3 install --upgrade gitman
 cd ~/git/laser_uav_system
 
 if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
-  gitman install -g simulation --force
+  gitman install simulation --force
 else
-  gitman install -g real --force
+  gitman install real --force
 fi
 
 # Create workspace and create symbolic link for dirs
