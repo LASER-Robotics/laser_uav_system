@@ -25,10 +25,11 @@ if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
 fi
 
 # Install dep and packages
-sudo apt install pip
+sudo apt install pip -y
 pip install packaging==24.2
 pip3 install kconfiglib
 sudo pip3 install --upgrade gitman
+sudo apt install ros-humble-mavlink* -y
 
 cd ~/git/laser_uav_system
 
