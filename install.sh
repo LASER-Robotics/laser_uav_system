@@ -121,7 +121,7 @@ cd autodiff
 mkdir -p build
 cd build
 cmake -DAUTODIFF_BUILD_TESTS=OFF -DAUTODIFF_BUILD_PYTHON=OFF ..
-make install -j4
+sudo make install -j4
 
 source ~/.bashrc
 
