@@ -8,6 +8,8 @@
         # This is the maximum speed
         max_vel: 16.0
 
+        default_vel: 1.0
+
       ltd_opt:
         use_drag: false
         thrust_decomp_acc_precision: 0.01
@@ -24,8 +26,8 @@
         alpha: 35.0
         alpha_reduction_factor: 0.1
         alpha_min_threshold: 0.01
-        max_iter: 10
+        max_iter: 25
 
       time:
-        dt_precision: 0.001
-        sampling_step: 0.0070 # DON'T CHANGE
+        dt_precision: 0.0001
+        sampling_step: 0.0093 # DON'T CHANGE

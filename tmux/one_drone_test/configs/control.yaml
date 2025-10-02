@@ -3,10 +3,10 @@
     nmpc_controller:
       quadrotor_parameters:
         # Quadrotor Mass
-        mass: 1.60 # Kg
+        mass: 2.0 # Kg
 
         # Diagonal of Inertia Matrix
-        inertia: [0.021667, 0.021667, 0.0425]
+        inertia: [0.02631, 0.02700, 0.0441]
 
         # Thrust constant {Ct}
         c_thrust: 27.6e-6 # This constant is the thrust coefficient
@@ -47,9 +47,9 @@
 
         # This is the Weight Matrix that penalize state error in FC
         # {W_position_xy, W_position_z, W_rotation_xy, W_rotation_z, W_speed, W_angular_speed}
-        Q: [200.0, 300.0, 1.5, 10.0, 1.0, 1.0] # Real drone gains 
+        Q: [200.0, 130.0, 0.3, 10.0, 1.0, 1.0] # Real drone gains 
 
-          # This is the weight Matrix that penalize input control effort in FC
+        # This is the weight Matrix that penalize input control effort in FC
         R: 2.0 # stable on gazebo
         
 
