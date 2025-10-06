@@ -27,7 +27,7 @@ fi
 # Install dep and packages
 sudo apt install pip -y
 pip install packaging==24.2
-pip3 install kconfiglib
+pip3 install kconfiglib jsonschema pyros
 sudo pip3 install --upgrade gitman
 sudo apt install ros-humble-mavlink* -y
 

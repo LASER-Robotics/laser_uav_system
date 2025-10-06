@@ -1,7 +1,7 @@
 name: simulation
 root: ./
 startup_window: control
-pre_window: export UAV_NAME=uav1; export UAV_TYPE=x500; export UAV_SENSORS="--enable_ground_truth"; export UAV_ESTIMATION_SOURCE="GNSS"
+pre_window: export UAV_NAME=uav1; export UAV_TYPE=x500; export UAV_SENSORS="--enable_ground_truth"; export UAV_ESTIMATION_SOURCE="EstimationManager"
 windows:
   - spawn:
       layout: even-horizontal
@@ -11,7 +11,7 @@ windows:
   - gazebo:
       layout: even-horizontal
       panes:
-        - gazebo -s libgazebo_ros_init.so -s libgazebo_ros_factory.so
+        - ros2 launch laser_uav_simulation gazebo.launch.py
   - api:
       layout: even-horizontal
       panes:

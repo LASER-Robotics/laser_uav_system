@@ -25,39 +25,39 @@ pip install --user -U empy==3.3.4 pyros-genmsg setuptools
 pip install -U colcon-common-extensions
 
 if [ $(grep -c "/opt/ros/humble/setup.bash" ~/.bashrc) -ne 1 ]; then
-  source /opt/ros/humble/setup.bash && echo -e "\n# source ROS Humble\n source /opt/ros/humble/setup.bash" >> ~/.bashrc
+  source /opt/ros/humble/setup.bash && echo -e "\n# source ROS Humble\nsource /opt/ros/humble/setup.bash" >> ~/.bashrc
 fi
 
 if [ $(grep -c "COLCON_LOG_LEVEL" ~/.bashrc) -ne 1 ]; then
-  echo -e "# reduce colcon spam\n export COLCON_LOG_LEVEL=30" >> ~/.bashrc
+  echo -e "# reduce colcon spam\nexport COLCON_LOG_LEVEL=30" >> ~/.bashrc
 fi
 
 if [ $(grep -c "RCUTILS_COLORIZED_OUTPUT" ~/.bashrc) -ne 1 ]; then
-  echo -e "# make logs colorful\n export RCUTILS_COLORIZED_OUTPUT=1" >> ~/.bashrc
+  echo -e "# make logs colorful\nexport RCUTILS_COLORIZED_OUTPUT=1" >> ~/.bashrc
 fi
 
 if [ $(grep -c "RCUTILS_LOGGING_BUFFERED_STREAM" ~/.bashrc) -ne 1 ]; then
-  echo -e "# force logging output to be buffered\n export RCUTILS_LOGGING_BUFFERED_STREAM=1" >> ~/.bashrc
+  echo -e "# force logging output to be buffered\nexport RCUTILS_LOGGING_BUFFERED_STREAM=1" >> ~/.bashrc
 fi
 
 if [ $(grep -c "RCUTILS_CONSOLE_OUTPUT_FORMAT" ~/.bashrc) -ne 1 ]; then
-  echo -e "# format logs in terminal\n export RCUTILS_CONSOLE_OUTPUT_FORMAT='[{severity}] [{time}] [{name}]: {message} ({function_name}() at {file_name}:{line_number})'" >> ~/.bashrc
+  echo -e "# format logs in terminal\nexport RCUTILS_CONSOLE_OUTPUT_FORMAT='[{severity}] [{time}] [{name}]: {message} ({function_name}() at {file_name}:{line_number})'" >> ~/.bashrc
 fi
 
 if [ $(grep -c "PYTHONWARNINGS" ~/.bashrc) -ne 1 ]; then
-  echo -e "# reduce depraction warning spam in colcon\n export PYTHONWARNINGS='ignore:::setuptools.command.install,ignore:::setuptools.command.easy_install,ignore:::pkg_resources'" >> ~/.bashrc
+  echo -e "# reduce depraction warning spam in colcon\nexport PYTHONWARNINGS='ignore:::setuptools.command.install,ignore:::setuptools.command.easy_install,ignore:::pkg_resources'" >> ~/.bashrc
 fi
 
 if [ $(grep -c "ROS_DOMAIN_ID" ~/.bashrc) -ne 1 ]; then
   resp=0
   [[ -t 0 ]] && { read -p $'\e[1;32mChoice a number between 46 and 232 for ROS domain ID :\e[0m\n' resp ; }
-  echo -e "# always set ROS domain id\n export ROS_DOMAIN_ID="$resp"" >> ~/.bashrc
+  echo -e "# always set ROS domain id\nexport ROS_DOMAIN_ID="$resp"" >> ~/.bashrc
 fi
 
 if [ $(grep -c "ROS_LOCALHOST_ONLY" ~/.bashrc) -ne 1 ]; then
-  echo -e "# always set ROS localhost only\n export ROS_LOCALHOST_ONLY=0" >> ~/.bashrc
+  echo -e "# always set ROS localhost only\nexport ROS_LOCALHOST_ONLY=0" >> ~/.bashrc
 fi
 
 if [ $(grep -c "RCUTILS_LOGGING_BUFFERED_STREAM" ~/.bashrc) -ne 1 ]; then
-  source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash && echo -e "# colcon tab completion\n source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
+  source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash && echo -e "# colcon tab completion\nsource /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
 fi
