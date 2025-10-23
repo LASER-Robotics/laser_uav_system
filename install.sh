@@ -4,6 +4,7 @@ if [ $(grep -c "REAL_UAV" ~/.bashrc) -ne 1 ]; then
   resp=""
   [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav? (true, false):\e[0m\n' resp ; }
   echo -e "export REAL_UAV=\""$resp"\"" >> ~/.bashrc
+  source ~/.bashrc
 fi
 
 # Install ROS Humble and Gazebo garden
@@ -17,7 +18,7 @@ if ! ls "/opt/ros" | grep -q "humble"; then
   ./install_ros_humble.sh
 fi
 
-if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "REAL_UAV=\"true\"" ~/.bashrc) -ne 1 ]; then
   if ! ls "/usr/bin" | grep -q "gazebo"; then
     ./install_gazebo.sh
     sudo apt install ros-humble-gazebo-* -y
@@ -33,7 +34,7 @@ sudo apt install ros-humble-mavlink* -y
 
 cd ~/git/laser_uav_system
 
-if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "REAL_UAV=\"true\"" ~/.bashrc) -ne 1 ]; then
   gitman install simulation --force
 else
   gitman install real --force
@@ -48,7 +49,7 @@ cd src
 
 ln -sf ~/git/laser_uav_system/ros_packages/* ./
 
-if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "REAL_UAV=\"true\"" ~/.bashrc) -ne 1 ]; then
   cd laser_uav_simulation/scripts
   ./build_px4_firmware.sh
   cd ~/laser_uav_system_ws/src
@@ -69,7 +70,7 @@ if [ $(grep -c "~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; th
   source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
 fi
 
-if [ $(grep -c "REAL_UAV=true" ~/.bashrc) -e 1 ]; then
+if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
   if [ $(grep -c "UAV_NAME" ~/.bashrc) -ne 1 ]; then
     resp=""
     [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav name (ex: uav1, uav2, uav3, ...):\e[0m\n' resp ; }
