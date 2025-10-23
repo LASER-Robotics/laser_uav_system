@@ -3,3 +3,8 @@
 .swo
 .swp
 .tmuxinator.yml
+
+ros_packages/laser_gazebo_resources
+ros_packages/laser_uav_simulation
+ros_packages/px4_firmware
+ros_packages/laser_uav_deployment
