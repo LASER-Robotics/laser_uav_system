@@ -156,6 +156,30 @@ sources:
         target: ros_packages/laser_uav_deployment
     scripts:
       - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_vio-s.git
+    name: laser_uav_vio-s
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_vio-s
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_drivers.git
+    name: laser_uav_drivers
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_drivers
+    scripts:
+      - git submodule update --init --recursive
 sources_locked:
 groups:
   - name: simulation
@@ -172,6 +196,7 @@ groups:
       - px4_firmware-ROS2-
       - micro_xrce_dds_agent
       - px4_msgs
+      - laser_uav_vio-s
   - name: real
     members:
       - laser_uav_deployment
@@ -184,4 +209,6 @@ groups:
       - laser_uav_lib
       - micro_xrce_dds_agent
       - px4_msgs
+      - laser_uav_vio-s
+      - laser_uav_drivers
 default_group: ''

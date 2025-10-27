@@ -128,6 +128,16 @@ sudo make install -j4
 
 source ~/.bashrc
 
+# Ceres solver for Open Vins
+sudo apt-get install ros-humble-ros2bag ros-humble-rosbag2* -y
+sudo apt-get install libeigen3-dev libboost-all-dev libceres-dev -y
+
+if [ $(grep -c "MAKEFLAGS" ~/.bashrc) -ne 1 ]; then
+  echo -e "export MAKEFLAGS=-j4" >> ~/.bashrc
+fi
+
+source ~/.bashrc
+
 # Build workspace
 cd ~/laser_uav_system_ws
 sudo rosdep init 
