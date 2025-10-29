@@ -82,18 +82,6 @@ if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
     [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav type (ex: x500, lr7pro, ...):\e[0m\n' resp ; }
     echo -e "export UAV_TYPE=\""$resp"\"" >> ~/.bashrc
   fi
-
-  if [ $(grep -c "UAV_SENSORS" ~/.bashrc) -ne 1 ]; then
-    resp=""
-    [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav sensors (ex: --enable_vio --enable_d435i_down --enable_ground_truth ....):\e[0m\n' resp ; }
-    echo -e "export UAV_SENSORS=\""$resp"\" # available sensors: --enable_vio, --enable_d435i_down --enable_d435i_front --enable_ground_truth" >> ~/.bashrc
-  fi
-
-  if [ $(grep -c "UAV_ESTIMATION_SOURCE" ~/.bashrc) -ne 1 ]; then
-    resp=""
-    [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav estimation source (ex: GNSS, VIO, LIO):\e[0m\n' resp ; }
-    echo -e "export UAV_ESTIMATION_SOURCE=\""$resp"\" # available estimation sources: GNSS, VIO, LIO" >> ~/.bashrc
-  fi
 fi
 
 # Acados installation solver of nmpc
