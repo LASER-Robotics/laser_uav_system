@@ -31,6 +31,7 @@ pip install packaging==24.2
 pip3 install kconfiglib jsonschema pyros
 sudo pip3 install --upgrade gitman
 sudo apt install ros-humble-mavlink* -y
+sudo apt install ros-humble-pcl* -y
 
 cd ~/git/laser_uav_system
 
