@@ -85,9 +85,8 @@ if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
   fi
 
   # realsense sdk installation
-  wget https://github.com/IntelRealSense/librealsense/raw/master/scripts/libuvc_installation.sh -O /tmp/libuvc_installation.sh
-  chmod +x /tmp/libuvc_installation.sh
-  /tmp/libuvc_installation.sh
+  sudo chmod +x ~/laser_uav_system_ws/src/laser_uav_drivers/ros_packages/realsense_drivers/scripts/libuvc_installation.sh
+  ~/laser_uav_system_ws/src/laser_uav_drivers/ros_packages/realsense_drivers/scripts/libuvc_installation.sh
 
   # livox sdk installation
   cd /tmp && git clone https://github.com/Livox-SDK/Livox-SDK2.git
