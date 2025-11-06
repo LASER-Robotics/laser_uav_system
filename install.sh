@@ -83,6 +83,19 @@ if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
     [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav type (ex: x500, lr7pro, ...):\e[0m\n' resp ; }
     echo -e "export UAV_TYPE=\""$resp"\"" >> ~/.bashrc
   fi
+
+  # realsense sdk installation
+  wget https://github.com/IntelRealSense/librealsense/raw/master/scripts/libuvc_installation.sh -O /tmp/libuvc_installation.sh
+  chmod +x /tmp/libuvc_installation.sh
+  /tmp/libuvc_installation.sh
+
+  # livox sdk installation
+  cd /tmp && git clone https://github.com/Livox-SDK/Livox-SDK2.git
+  cd ./Livox-SDK2/
+  mkdir build
+  cd build
+  cmake .. && make -j6
+  sudo make install
 fi
 
 # Acados installation solver of nmpc
