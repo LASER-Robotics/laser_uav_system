@@ -144,7 +144,7 @@ source ~/.bashrc
 cd ~/laser_uav_system_ws
 sudo rosdep init 
 rosdep update
-rosdep install -i --from-path src --rosdistro humble -y
+rosdep install --from-path src --rosdistro humble -y
 colcon build --symlink-install
 
 sudo apt install toilet
