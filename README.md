@@ -61,7 +61,7 @@ cd ~/git/laser_uav_system
 After installation, you can find examples of how to run the system in the tmux folder of this repository. Below is a snippet that runs the simulation of an x500 drone with the LUS stack.
 
 ```sh
-cd ~/git/laser_uav_system/tmux/one_drone_test
+cd ~/laser_uav_system_ws/src/laser_uav_simulation/tmux/one_drone_test
 ./start.sh
 ```
 
