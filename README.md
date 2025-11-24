@@ -1,7 +1,8 @@
 # LASER UAV System [LUS]
 
 [![Main Build](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/main-build.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/main-build.yml)
-[![License: MIT](https://img.shields.io/badge/License-BSD3-white.svg)](https://opensource.org/licenses/BSD3)
+[![License: BSD3](https://img.shields.io/badge/License-BSD3-white.svg)](https://opensource.org/licenses/BSD3)
+
 
 This is the **metapackage repository** responsible for orchestrating and managing all constituent packages of the **[LUS]** autonomous drone system.
 
