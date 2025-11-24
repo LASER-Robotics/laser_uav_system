@@ -84,8 +84,27 @@ cd ~/laser_uav_system_ws/src/laser_uav_simulation/tmux/one_drone_test
 The lr7pro UAV, a supported platform for the LUS stack:
 
 
-
 https://github.com/user-attachments/assets/6dfdd26c-1327-4a3c-a88e-73f5a55d394f
+
+---
+
+## Validation
+The [LUS] system has undergone rigorous validation across various modalities and environments. The control stack, featuring NMPC (Nonlinear Model Predictive Control) + INDI (Incremental Nonlinear Dynamic Inversion), has been comprehensively tested.
+
+This validation includes successful integration and testing of all major state estimation types:
+
+VIO (Visual-Inertial Odometry)
+
+GNSS (Global Navigation Satellite System)
+
+LIO (Laser Inertial Odometry)
+
+Validation was successfully achieved in both simulated environments and on the physical drone hardware (real-world flights).
+
+Real-world validation using the x500 platform with the LIO and NMPC+INDI algorithms:
+
+
+https://github.com/user-attachments/assets/92809e07-3467-4af6-8510-690d2e050b79
 
 
 ---
