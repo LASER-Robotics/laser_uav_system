@@ -71,12 +71,22 @@ cd ~/git/laser_uav_system
 
 ## Usage
 
-After installation, you can find examples of how to run the system in the tmux folder of this repository. Below is a snippet that runs the simulation of an x500 drone with the LUS stack.
+Upon successful installation, detailed **execution examples** and configuration scripts for initiating the system can be found within the `tmux` directory of this repository.
+
+The following command sequence demonstrates how to launch the **simulation of the lr7pro drone** integrated with the full LUS stack:
 
 ```sh
 cd ~/laser_uav_system_ws/src/laser_uav_simulation/tmux/one_drone_test
 ./start.sh
 ```
+**Supported Platform**
+
+The lr7pro UAV, a supported platform for the LUS stack:
+
+
+
+https://github.com/user-attachments/assets/6dfdd26c-1327-4a3c-a88e-73f5a55d394f
+
 
 ---
 
