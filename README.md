@@ -17,6 +17,10 @@ This repository does not contain functional source code itself, but rather the p
 * **Hardware API:** Comunication with flight controller autopilot.
 * **Simulation:** Environments and models for Gazebo Classic simulation.
 
+### Architecture
+
+![system_architecture](https://github.com/LASER-Robotics/laser_uav_system/blob/main/assets/system_architecture.png)
+
 This metapackage ensures that all these components are installed and built in the correct version.
 
 ## Getting Started
@@ -73,10 +77,13 @@ This metapackage manages the following packages:
 | -------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------- |
 | `laser_msgs`                        | Contains message definitions.     | [[Link to repo](https://github.com/LASER-Robotics/laser_msgs)]                                  |
 | `laser_uav_controllers`                       | Implements high and low-level controllers for position tracking, attitude tracking, etc.     | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_controllers)]                                  |
-| `laser_uav_managers`                    | ROS2 nodes for stack management. These nodes use the controller classes to manage autonomous flight.       | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_managers)]                                  |
 | `laser_uav_planner`                      | Implements trajectory, motion, and path planners.            | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_planner)]                                  |
-| `laser_uav_simulation`                    | Contains the simulation environment and the drone models we use.                | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_simulation)]                                  | 
+| `laser_uav_estimators`                       | Implements filters for uav's state estimators for control feedback.     | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_estimators)]                                  |
+| `laser_uav_managers`                    | ROS2 nodes for stack management. These nodes use the controller and estimators classes to manage autonomous flight.       | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_managers)]                                  |
+| `laser_uav_lib`                    | Contains the c++ and python librarys for general uso com uavs.                | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_lib)]                                  | 
 | `laser_uav_px4_api`                    | API for communication with the onboard autopilot hardware.                | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_px4_api)]                                  | 
+| `laser_gazebo_resources`                    | Contains the models, plugins, world and etc for simulation with gazebo.                | [[Link to repo](https://github.com/LASER-Robotics/laser_gazebo_resources)]                                  | 
+| `laser_uav_simulation`                    | Contains the simulation environment and the drone models we use.                | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_simulation)]                                  | 
 | `px4_firmware`                    | Autopilot firmware modified for use in conjunction with our API.              | [[Link to repo](https://github.com/LASER-Robotics/px4_firmware-ROS2-)]                                  | 
 | `px4_msgs`                    | Contains message definitions used by the px4 firmware.              | [[Link to repo](https://github.com/LASER-Robotics/px4_msgs)]                                  | 
 | `micro_xrce_dds_agent`                    | 	Contains the protocol agent responsible for the communication bridge between the companion computer and the flight controller.              | [[Link to repo](https://github.com/LASER-Robotics/micro_xrce_dds_agent)]                                  | 
