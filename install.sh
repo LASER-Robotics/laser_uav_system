@@ -88,7 +88,7 @@ if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
     echo -e "export UAV_TYPE=\""$resp"\"" >> ~/.bashrc
   fi
 
-   realsense sdk installation
+   # realsense sdk installation
    default=n
    while true; do
      if [[ "$unattended" == "1" ]]
