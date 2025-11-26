@@ -58,6 +58,6 @@ if [ $(grep -c "ROS_LOCALHOST_ONLY" ~/.bashrc) -ne 1 ]; then
   echo -e "# always set ROS localhost only\nexport ROS_LOCALHOST_ONLY=0" >> ~/.bashrc
 fi
 
-if [ $(grep -c "RCUTILS_LOGGING_BUFFERED_STREAM" ~/.bashrc) -ne 1 ]; then
+if [ $(grep -c "/usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" ~/.bashrc) -ne 1 ]; then
   source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash && echo -e "# colcon tab completion\nsource /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
 fi
