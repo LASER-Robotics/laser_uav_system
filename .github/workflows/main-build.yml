@@ -2,18 +2,16 @@ name: Main Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ release/1.0 ]
     paths-ignore:
       - '**/README.md'
   pull_request:
-    branches: [ main ]
+    branches: [ release/1.0 ]
 
 env:
   REAL_UAV: "false"
   UAV_NAME: "uav1"
   UAV_TYPE: "x500"
-  UAV_SENSOR: ""
-  UAV_ESTIMATION_SOURCE: "GNSS"
 
 jobs:
   build:
