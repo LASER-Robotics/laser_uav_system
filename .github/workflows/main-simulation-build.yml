@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          path: /home/runner/work/laser_uav_system/git
+          path: /home/runner/work/laser_uav_system/laser_uav_system/git
 
       - name: Setup SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
