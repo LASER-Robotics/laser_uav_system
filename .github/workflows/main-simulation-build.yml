@@ -26,10 +26,10 @@ jobs:
         with:
             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Setup ROS 2 Humble
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: humble
+      #- name: Setup ROS 2 Humble
+      #  uses: ros-tooling/setup-ros@v0.7
+      #  with:
+      #    required-ros-distributions: humble
 
       - name: Execute install.sh
-        run: ./install.sh
+        run: git/laser_uav_system/install.sh
