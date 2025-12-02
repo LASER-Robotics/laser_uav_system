@@ -32,4 +32,4 @@ jobs:
       #    required-ros-distributions: humble
 
       - name: Execute install.sh
-        run: git/laser_uav_system/install.sh
+        run: ~/git/laser_uav_system/install.sh
