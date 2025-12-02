@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ $(grep -c "REAL_UAV" ~/.bashrc) -ne 1 ]; then
   resp=""
   [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav? (true, false):\e[0m\n' resp ; }
