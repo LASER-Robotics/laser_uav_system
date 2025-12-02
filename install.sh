@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ "${GITHUB_ACTIONS}" == "true" ]; then
+    BASE_DIR="$GITHUB_WORKSPACE"
+else
+    BASE_DIR="$(pwd)"
+fi
+
 set -e
 
 if [ $(grep -c "REAL_UAV" ~/.bashrc) -ne 1 ]; then
@@ -39,7 +45,7 @@ sudo pip3 install --upgrade gitman
 sudo apt install ros-humble-mavlink* -y
 sudo apt install ros-humble-pcl* -y
 
-cd ~/git/laser_uav_system
+cd $BASE_DIR/git/laser_uav_system
 
 if [ $(grep -c "REAL_UAV=\"true\"" ~/.bashrc) -ne 1 ]; then
   gitman install simulation --force
@@ -48,24 +54,24 @@ else
 fi
 
 # Create workspace and create symbolic link for dirs
-cd ~
+cd $BASE_DIR
 mkdir laser_uav_system_ws
-cd ~/laser_uav_system_ws
+cd $BASE_DIR/laser_uav_system_ws
 mkdir src
 cd src
 
-ln -sf ~/git/laser_uav_system/ros_packages/* ./
+ln -sf $BASE_DIR/git/laser_uav_system/ros_packages/* ./
 
 if [ $(grep -c "REAL_UAV=\"true\"" ~/.bashrc) -ne 1 ]; then
   cd laser_uav_simulation/scripts
   ./build_px4_firmware.sh
-  cd ~/laser_uav_system_ws/src
+  cd $BASE_DIR/laser_uav_system_ws/src
   rm px4_firmware
 fi
 
 rm micro_xrce_dds_agent
 # Make package with comunication protocol
-cd ~/git/laser_uav_system/ros_packages/micro_xrce_dds_agent
+cd $BASE_DIR/git/laser_uav_system/ros_packages/micro_xrce_dds_agent
 mkdir build
 cd build
 cmake ..
@@ -74,7 +80,7 @@ sudo make install
 sudo ldconfig /usr/local/lib/
 
 if [ $(grep -c "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
-  source ~/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
+  source $BASE_DIR/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
 fi
 
 if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
@@ -138,7 +144,7 @@ if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
  fi
 
  # Acados installation solver of nmpc
- cd ~/laser_uav_system_ws/src/laser_uav_controllers/
+ cd $BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/
  git submodule update --recursive --init
  cd acados
  git submodule update --recursive --init
@@ -159,7 +165,7 @@ if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
  fi
 
  # Autodiff for EKF
- cd ~/laser_uav_system_ws/src/laser_uav_estimators/
+ cd $BASE_DIR/laser_uav_system_ws/src/laser_uav_estimators/
  git submodule update --recursive --init
  cd autodiff
  mkdir -p build
@@ -176,7 +182,7 @@ if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
  source ~/.bashrc
 
  # Build workspace
- cd ~/laser_uav_system_ws
+ cd $BASE_DIR/laser_uav_system_ws
  sudo rosdep init 
  rosdep update
  rosdep install --from-path src --rosdistro humble -y
