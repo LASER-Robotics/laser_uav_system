@@ -1,4 +1,4 @@
-name: main-simulation-build
+name: simulation-build
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
         default: 'false'
 
 env:
-  REAL_UAV: "false"
+  REAL_UAV: '"false"'
 
 jobs:
   build:
