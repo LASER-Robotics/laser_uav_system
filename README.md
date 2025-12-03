@@ -1,6 +1,7 @@
 # LASER UAV System [LUS]
 
-[![Main Build](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/main-build.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/main-build.yml)
+[![Simulation Build](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/simulation-build.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/simulation-build.yml)
+[![Real Build](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/real-build.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/real-build.yml)
 [![License: BSD3](https://img.shields.io/badge/License-BSD3-white.svg)](https://opensource.org/licenses/BSD3)
 
 
