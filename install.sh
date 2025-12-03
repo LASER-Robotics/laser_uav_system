@@ -8,7 +8,7 @@ fi
 
 set -e
 
-if [ $(grep -c "REAL_UAV" ~/.bashrc) -ne 1 ]; then
+if [ -z "$REAL_UAV" ]; then
   resp=""
   [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav? (true, false):\e[0m\n' resp ; }
   echo -e "export REAL_UAV=\""$resp"\"" >> ~/.bashrc
@@ -26,7 +26,7 @@ if ! ls "/opt/ros" | grep -q "humble"; then
   ./install_ros_humble.sh
 fi
 
-if [ $(grep -c "REAL_UAV=\"true\"" ~/.bashrc) -ne 1 ]; then
+if [ "$REAL_UAV" == "false" ]; then
   if ! ls "/usr/bin" | grep -q "gazebo"; then
     ./install_gazebo.sh
     sudo apt install ros-humble-gazebo-* -y
@@ -47,7 +47,7 @@ sudo apt install ros-humble-pcl* -y
 
 cd $BASE_DIR/git/laser_uav_system
 
-if [ $(grep -c "REAL_UAV=\"true\"" ~/.bashrc) -ne 1 ]; then
+if [ "$REAL_UAV" == "false" ]; then
   gitman install simulation --force
 else
   gitman install real --force
@@ -62,7 +62,7 @@ cd src
 
 ln -sf $BASE_DIR/git/laser_uav_system/ros_packages/* ./
 
-if [ $(grep -c "REAL_UAV=\"true\"" ~/.bashrc) -ne 1 ]; then
+if [ "$REAL_UAV" == "false" ]; then
   sudo apt-get update
   sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libunwind-dev
   pip3 install future
@@ -82,14 +82,14 @@ make
 sudo make install
 sudo ldconfig /usr/local/lib/
 
-if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
-  if [ $(grep -c "UAV_NAME" ~/.bashrc) -ne 1 ]; then
+if [ "$REAL_UAV" == "true" ]; then
+  if [ -z "$UAV_NAME" ]; then
     resp=""
     [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav name (ex: uav1, uav2, uav3, ...):\e[0m\n' resp ; }
     echo -e "export UAV_NAME=\""$resp"\"" >> ~/.bashrc
   fi
 
-  if [ $(grep -c "UAV_TYPE" ~/.bashrc) -ne 1 ]; then
+  if [ -z "$UAV_TYPE" ]; then
     resp=""
     [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav type (ex: x500, lr7pro, ...):\e[0m\n' resp ; }
     echo -e "export UAV_TYPE=\""$resp"\"" >> ~/.bashrc
