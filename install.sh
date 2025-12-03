@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo $REAL_UAV
 if [ "$REAL_UAV" == "false" ]; then
 echo "AJUDA"
 fi
