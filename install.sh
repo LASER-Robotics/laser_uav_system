@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "$REAL_UAV mano"
-if [ "$REAL_UAV" == "false" ]; then
+if [ $REAL_UAV == "false" ]; then
 echo "AJUDA"
 fi
 
