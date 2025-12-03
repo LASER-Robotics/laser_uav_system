@@ -38,12 +38,14 @@ fi
  fi
 
 # Install dep and packages
+sudo apt-get update
 sudo apt install pip -y
 pip install packaging==24.2
-pip3 install kconfiglib jsonschema pyros
+pip3 install kconfiglib jsonschema pyros future
 sudo pip3 install --upgrade gitman
 sudo apt install ros-humble-mavlink* -y
 sudo apt install ros-humble-pcl* -y
+sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libunwind-dev
 
 cd $BASE_DIR/git/laser_uav_system
 
@@ -63,9 +65,6 @@ cd src
 ln -sf $BASE_DIR/git/laser_uav_system/ros_packages/* ./
 
 if [ "$REAL_UAV" == "\"false\"" ]; then
-  sudo apt-get update
-  sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libunwind-dev
-  pip3 install future
   cd laser_uav_simulation/scripts
   ./build_px4_firmware.sh
   cd $BASE_DIR/laser_uav_system_ws/src
@@ -187,9 +186,6 @@ if [ "$REAL_UAV" == "\"true\"" ]; then
 
  # Build workspace
  cd $BASE_DIR/laser_uav_system_ws
- sudo rosdep init 
- rosdep update
- rosdep install --from-path src --rosdistro humble -y
  colcon build --symlink-install
 
  if [ $(grep -c "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
