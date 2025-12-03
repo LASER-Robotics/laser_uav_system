@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ "$REAL_UAV" == "false" ]; then
+echo "AJUDA"
+fi
+
 if [ "${GITHUB_ACTIONS}" == "true" ]; then
     BASE_DIR="$GITHUB_WORKSPACE"
 else
