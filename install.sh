@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#echo "$REAL_UAV ${GITHUB_ACTIONS} $GITHUB_ACTIONS mano"
+echo ${REAL_UAV} $REAL_UAV
 if [ $REAL_UAV == "false" ]; then
     echo "AJUDA"
 fi
