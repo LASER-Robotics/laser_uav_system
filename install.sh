@@ -22,6 +22,10 @@ fi
    ./install_ros_humble.sh
  fi
 
+ if [ "${GITHUB_ACTIONS}" == "true" ]; then
+    ./install_ros_humble.sh
+ else
+
 if ! ls "/opt/ros" | grep -q "humble"; then
   ./install_ros_humble.sh
 fi
@@ -41,7 +45,7 @@ fi
 sudo apt-get update
 sudo apt install pip -y
 pip install packaging==24.2
-pip3 install kconfiglib jsonschema pyros future
+pip3 install kconfiglib jsonschema pyros future empy==3.3.4 pyros-genmsg setuptools
 sudo pip3 install --upgrade gitman
 sudo apt install ros-humble-mavlink* -y
 sudo apt install ros-humble-pcl* -y
