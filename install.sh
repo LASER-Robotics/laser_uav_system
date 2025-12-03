@@ -99,51 +99,56 @@ if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
     echo -e "export UAV_TYPE=\""$resp"\"" >> ~/.bashrc
   fi
 
-   # realsense sdk installation
-   default=n
-   while true; do
-     if [[ "$unattended" == "1" ]]
-     then
-       resp=$default
-     else
-       [[ -t 0 ]] && { read -t 10 -n 2 -p $'\e[1;32mInstall Realsense Series SDK? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default ; }
-     fi
-     response=`echo $resp | sed -r 's/(.*)$/\1=/'`
-
-     if [[ $response =~ ^(y|Y)=$ ]] 
-     then
-       ~/git/laser_uav_system/environment_install/install_realsense_sdk.sh
-       break
-     elif [[ $response =~ ^(n|N)=$ ]] 
-     then
-       break
-     else
-       echo " What? \"$resp\" is not a correct answer."
-     fi
-   done
-
-   # livox sdk installation
-   default=n
-   while true; do
-     if [[ "$unattended" == "1" ]]
-     then
-       resp=$default
-     else
-       [[ -t 0 ]] && { read -t 10 -n 2 -p $'\e[1;32mInstall Livox Series SDK? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default ; }
-     fi
-     response=`echo $resp | sed -r 's/(.*)$/\1=/'`
-
-     if [[ $response =~ ^(y|Y)=$ ]] 
-     then
-       ~/git/laser_uav_system/environment_install/install_livox_sdk.sh
-       break
-     elif [[ $response =~ ^(n|N)=$ ]] 
-     then
-       break
-     else
-       echo " What? \"$resp\" is not a correct answer."
-     fi
-   done
+    if [ "${GITHUB_ACTIONS}" == "true" ]; then
+      $BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh
+      $BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh
+    else
+     # realsense sdk installation
+     default=n
+     while true; do
+       if [[ "$unattended" == "1" ]]
+       then
+         resp=$default
+       else
+         [[ -t 0 ]] && { read -t 10 -n 2 -p $'\e[1;32mInstall Realsense Series SDK? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default ; }
+       fi
+       response=`echo $resp | sed -r 's/(.*)$/\1=/'`
+  
+       if [[ $response =~ ^(y|Y)=$ ]] 
+       then
+         $BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh
+         break
+       elif [[ $response =~ ^(n|N)=$ ]] 
+       then
+         break
+       else
+         echo " What? \"$resp\" is not a correct answer."
+       fi
+     done
+  
+     # livox sdk installation
+     default=n
+     while true; do
+       if [[ "$unattended" == "1" ]]
+       then
+         resp=$default
+       else
+         [[ -t 0 ]] && { read -t 10 -n 2 -p $'\e[1;32mInstall Livox Series SDK? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default ; }
+       fi
+       response=`echo $resp | sed -r 's/(.*)$/\1=/'`
+  
+       if [[ $response =~ ^(y|Y)=$ ]] 
+       then
+         $BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh
+         break
+       elif [[ $response =~ ^(n|N)=$ ]] 
+       then
+         break
+       else
+         echo " What? \"$resp\" is not a correct answer."
+       fi
+     done
+   fi
  fi
 
  # Acados installation solver of nmpc
