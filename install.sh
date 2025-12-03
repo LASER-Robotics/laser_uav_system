@@ -82,10 +82,6 @@ make
 sudo make install
 sudo ldconfig /usr/local/lib/
 
-if [ $(grep -c "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
-  source $BASE_DIR/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
-fi
-
 if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
   if [ $(grep -c "UAV_NAME" ~/.bashrc) -ne 1 ]; then
     resp=""
@@ -195,6 +191,10 @@ if [ $(grep -c "REAL_UAV=\"false\"" ~/.bashrc) -ne 1 ]; then
  rosdep update
  rosdep install --from-path src --rosdistro humble -y
  colcon build --symlink-install
+
+ if [ $(grep -c "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
+  source $BASE_DIR/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
+ fi
 
  sudo apt install toilet
 
