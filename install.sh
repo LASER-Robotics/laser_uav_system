@@ -64,7 +64,7 @@ ln -sf $BASE_DIR/git/laser_uav_system/ros_packages/* ./
 
 if [ $(grep -c "REAL_UAV=\"true\"" ~/.bashrc) -ne 1 ]; then
   sudo apt-get update
-  sudo apt-get install libgstreamer1.0-dev gstreamer-app-1.0 libunwind-dev
+  sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libunwind-dev
   pip3 install future
   cd laser_uav_simulation/scripts
   ./build_px4_firmware.sh
