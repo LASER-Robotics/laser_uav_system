@@ -28,7 +28,7 @@ if [ "$REAL_UAV" == "\"false\"" ]; then
 fi
 
  if [ $(grep -c "MAKEFLAGS" ~/.bashrc) -ne 1 ]; then
-   echo -e "export MAKEFLAGS=-j4" >> ~/.bashrc
+   export MAKEFLAGS=-j4 && echo -e "export MAKEFLAGS=-j4" >> ~/.bashrc
  fi
 
 # Install dep and packages
@@ -151,14 +151,14 @@ if [ "$REAL_UAV" == "\"true\"" ]; then
  make install -j4
 
  if [ $(grep -c "ACADOS_SOURCE_DIR" ~/.bashrc) -ne 1 ]; then
-   echo -e "#set acados solver of nmpc \nexport ACADOS_SOURCE_DIR="~/laser_uav_system_ws/src/laser_uav_controllers/acados"" >> ~/.bashrc
-   echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/laser_uav_system_ws/src/laser_uav_controllers/acados/lib"" >> ~/.bashrc
+   export ACADOS_SOURCE_DIR="$BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/acados" && echo -e "#set acados solver of nmpc \nexport ACADOS_SOURCE_DIR="~/laser_uav_system_ws/src/laser_uav_controllers/acados"" >> ~/.bashrc
+   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/acados/lib" && echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/laser_uav_system_ws/src/laser_uav_controllers/acados/lib"" >> ~/.bashrc
  fi
 
  if [ $(grep -c "GAZEBO_PLUGIN_PATH" ~/.bashrc) -ne 1 ]; then
-   echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic"" >> ~/.bashrc
-   echo -e "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
-   echo -e "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models" >> ~/.bashrc
+   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" && echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic"" >> ~/.bashrc
+   export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic && echo -e "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
+   export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:$BASE_DIR/git/laser_uav_system/ros_packages/laser_uav_simulation/models:$BASE_DIR/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models && echo -e "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models" >> ~/.bashrc
  fi
 
  # Autodiff for EKF
@@ -180,7 +180,7 @@ if [ "$REAL_UAV" == "\"true\"" ]; then
 
  # Build workspace
  cd $BASE_DIR/laser_uav_system_ws
- colcon build --symlink-install
+ colcon build --symlink-install --cmake-args -Wno-dev
 
  if [ $(grep -c "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
   source $BASE_DIR/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
