@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "$REAL_UAV ${GITHUB_ACTIONS} $GITHUB_ACTIONS mano"
-if [ ${REAL_UAV} == "false" ]; then
-echo "AJUDA"
+#echo "$REAL_UAV ${GITHUB_ACTIONS} $GITHUB_ACTIONS mano"
+if [ $REAL_UAV == "false" ]; then
+    echo "AJUDA"
 fi
 
 if [ "${GITHUB_ACTIONS}" == "true" ]; then
