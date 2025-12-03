@@ -17,14 +17,8 @@ fi
 
 # Install ROS Humble and Gazebo garden
  cd ./environment_install
-
- if ! ls "/opt" | grep -q "ros"; then
-   ./install_ros_humble.sh
- fi
-
- if [ "${GITHUB_ACTIONS}" == "true" ]; then
-    ./install_ros_humble.sh
- else
+ 
+ ./install_ros_humble.sh
 
 if ! ls "/opt/ros" | grep -q "humble"; then
   ./install_ros_humble.sh
