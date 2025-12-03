@@ -34,4 +34,4 @@ jobs:
           required-ros-distributions: humble
 
       - name: Execute install.sh
-        run: cd $GITHUB_WORKSPACE/git/laser_uav_system && ./install.sh
+        run: source /opt/ros/humble/setup.bash && cd $GITHUB_WORKSPACE/git/laser_uav_system && ./install.sh
