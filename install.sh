@@ -20,10 +20,6 @@ fi
  
  ./install_ros_humble.sh
 
-if ! ls "/opt/ros" | grep -q "humble"; then
-  ./install_ros_humble.sh
-fi
-
 if [ "$REAL_UAV" == "\"false\"" ]; then
   if ! ls "/usr/bin" | grep -q "gazebo"; then
     ./install_gazebo.sh
