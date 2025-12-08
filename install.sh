@@ -3,7 +3,7 @@
 if [ "${GITHUB_ACTIONS}" == "true" ]; then
     BASE_DIR="$GITHUB_WORKSPACE"
 else
-    BASE_DIR="$(pwd)"
+    BASE_DIR="$HOME"
 fi
 
 set -e
