@@ -1,5 +1,6 @@
 if [ "${GITHUB_ACTIONS}" == "true" ]; then
     BASE_DIR="$GITHUB_WORKSPACE"
+    set -e
 else
     BASE_DIR="$HOME"
 fi
