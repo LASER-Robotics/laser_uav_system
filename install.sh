@@ -184,7 +184,7 @@ if [ "$REAL_UAV" == $TRUE ]; then
  # Build workspace
  cd $BASE_DIR/laser_uav_system_ws
  rosdep init
- resode install --from-path ./src -r -y
+ rosdep install --from-path ./src -r -y
  colcon build --symlink-install --cmake-args -Wno-dev
 
  if [ $(grep -c "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
