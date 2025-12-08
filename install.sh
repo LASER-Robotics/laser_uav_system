@@ -2,8 +2,12 @@
 
 if [ "${GITHUB_ACTIONS}" == "true" ]; then
     BASE_DIR="$GITHUB_WORKSPACE"
+    FALSE="\"false\""
+    TRUE="\"true\""
 else
     BASE_DIR="$HOME"
+    FALSE="false"
+    TRUE="true"
 fi
 
 set -e
@@ -16,11 +20,11 @@ if [ -z "$REAL_UAV" ]; then
 fi
 
 # Install ROS Humble and Gazebo garden
- cd ./environment_install
+cd ./environment_install
  
- ./install_ros_humble.sh
+./install_ros_humble.sh
 
-if [ "$REAL_UAV" == "\"false\"" ]; then
+if [ "$REAL_UAV" == $FALSE ]; then
   if ! ls "/usr/bin" | grep -q "gazebo"; then
     ./install_gazebo.sh
     sudo apt install ros-humble-gazebo-* -y
@@ -43,7 +47,7 @@ sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstrea
 
 cd $BASE_DIR/git/laser_uav_system
 
-if [ "$REAL_UAV" == "\"false\"" ]; then
+if [ "$REAL_UAV" == $FALSE ]; then
   gitman install simulation --force
 else
   gitman install real --force
@@ -58,7 +62,7 @@ cd src
 
 ln -sf $BASE_DIR/git/laser_uav_system/ros_packages/* ./
 
-if [ "$REAL_UAV" == "\"false\"" ]; then
+if [ "$REAL_UAV" == $FALSE ]; then
   cd laser_uav_simulation/scripts
   ./build_px4_firmware.sh
   cd $BASE_DIR/laser_uav_system_ws/src
@@ -75,7 +79,7 @@ make
 sudo make install
 sudo ldconfig /usr/local/lib/
 
-if [ "$REAL_UAV" == "\"true\"" ]; then
+if [ "$REAL_UAV" == $TRUE ]; then
   if [ -z "$UAV_NAME" ]; then
     resp=""
     [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav name (ex: uav1, uav2, uav3, ...):\e[0m\n' resp ; }
