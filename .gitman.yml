@@ -180,6 +180,18 @@ sources:
         target: ros_packages/laser_uav_lio-s
     scripts:
       - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_tui.git
+    name: laser_uav_tui
+    rev: stable
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_tui
+    scripts:
+      - git submodule update --init --recursive
   - repo: git@github.com:LASER-Robotics/laser_uav_drivers.git
     name: laser_uav_drivers
     rev: stable
@@ -210,6 +222,7 @@ groups:
       - px4_msgs
       - laser_uav_vio-s
       - laser_uav_lio-s
+      - laser_uav_tui
   - name: real
     members:
       - laser_uav_deployment
@@ -225,4 +238,5 @@ groups:
       - laser_uav_vio-s
       - laser_uav_lio-s
       - laser_uav_drivers
+      - laser_uav_tui
 default_group: ''
