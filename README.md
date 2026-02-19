@@ -23,7 +23,7 @@ The **[LUS]** is an open-source software platform designed to enable the **auton
 
 ### Architecture
 
-![Diagram of the LUS System Architecture, illustrating the modularity and dependencies of the ROS 2 packages.](https://github.com/LASER-Robotics/laser_uav_system/blob/main/assets/system_architecture.png)
+![Diagram of the LUS System Architecture, illustrating the modularity and dependencies of the ROS 2 packages.](https://github.com/LASER-Robotics/laser_uav_system/blob/stable/assets/system_architecture.png)
 
 [Image of LUS system architecture diagram]
 
