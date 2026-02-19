@@ -183,7 +183,7 @@ if [ "$REAL_UAV" == $TRUE ]; then
 
  # Build workspace
  cd $BASE_DIR/laser_uav_system_ws
- colcon build --symlink-install --cmake-args -Wno-dev
+ source $BASE_DIR/laser_uav_system_ws/install/setup.bash && colcon build --symlink-install --cmake-args -Wno-dev
 
  if [ $(grep -c "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
   source $BASE_DIR/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
