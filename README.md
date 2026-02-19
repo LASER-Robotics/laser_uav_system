@@ -117,6 +117,7 @@ This metapackage manages the following critical packages within the **[LUS]** ec
 
 | Package | Description | Repository |
 | :--- | :--- | :--- |
+| `laser_uav_tui` | Contains **a Terminal User Interface (TUI) designed to provide a more user-friendly experience** and streamline experimental validation. | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_tui)] |
 | `laser_msgs` | Contains **custom message definitions** utilized across the entire software stack. | [[Link to repo](https://github.com/LASER-Robotics/laser_msgs)] |
 | `laser_uav_controllers` | Implements **high and low-level controllers** for position and attitude tracking. | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_controllers)] |
 | `laser_uav_planner` | Implements **trajectory, motion, and path planners**. | [[Link to repo](https://github.com/LASER-Robotics/laser_uav_planner)] |
