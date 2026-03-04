@@ -192,6 +192,18 @@ sources:
         target: ros_packages/laser_uav_tui
     scripts:
       - git submodule update --init --recursive
+  - repo: git@github.com:LASER-Robotics/laser_uav_imu_filter.git
+    name: laser_uav_imu_filter
+    rev: stable
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/laser_uav_imu_filter
+    scripts:
+      - git submodule update --init --recursive
   - repo: git@github.com:LASER-Robotics/laser_uav_drivers.git
     name: laser_uav_drivers
     rev: stable
@@ -213,6 +225,7 @@ groups:
       - laser_uav_controllers
       - laser_uav_estimators
       - laser_uav_planners
+      - laser_uav_imu_filter
       - laser_msgs
       - laser_uav_lib
       - laser_uav_simulation
@@ -231,6 +244,7 @@ groups:
       - laser_uav_controllers
       - laser_uav_estimators
       - laser_uav_planners
+      - laser_uav_imu_filter
       - laser_msgs
       - laser_uav_lib
       - micro_xrce_dds_agent
