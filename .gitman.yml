@@ -1,6 +1,6 @@
 location: .gitman
 sources:
-  - repo: git@github.com:LASER-Robotics/px4_firmware-ROS2-.git
+  - repo: https://github.com/LASER-Robotics/px4_firmware-ROS2-.git
     name: px4_firmware-ROS2-
     rev: release/1.15
     type: git
@@ -12,7 +12,7 @@ sources:
         target: ros_packages/px4_firmware
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/micro_xrce_dds_agent.git
+  - repo: https://github.com/LASER-Robotics/micro_xrce_dds_agent.git
     name: micro_xrce_dds_agent
     rev: release/1.0
     type: git
@@ -24,7 +24,7 @@ sources:
         target: ros_packages/micro_xrce_dds_agent
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/px4_msgs.git
+  - repo: https://github.com/LASER-Robotics/px4_msgs.git
     name: px4_msgs
     rev: release/1.15
     type: git
@@ -36,7 +36,7 @@ sources:
         target: ros_packages/px4_msgs
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_px4_api.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_px4_api.git
     name: laser_uav_px4_api
     rev: stable
     type: git
@@ -48,7 +48,7 @@ sources:
         target: ros_packages/laser_uav_px4_api
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_managers.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_managers.git
     name: laser_uav_managers
     rev: stable
     type: git
@@ -60,7 +60,7 @@ sources:
         target: ros_packages/laser_uav_managers
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_controllers.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_controllers.git
     name: laser_uav_controllers
     rev: stable
     type: git
@@ -72,7 +72,7 @@ sources:
         target: ros_packages/laser_uav_controllers
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_planners.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_planners.git
     name: laser_uav_planners
     rev: stable
     type: git
@@ -84,7 +84,7 @@ sources:
         target: ros_packages/laser_uav_planners
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_msgs.git
+  - repo: https://github.com/LASER-Robotics/laser_msgs.git
     name: laser_msgs
     rev: stable
     type: git
@@ -96,7 +96,7 @@ sources:
         target: ros_packages/laser_msgs
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_simulation.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_simulation.git
     name: laser_uav_simulation
     rev: stable
     type: git
@@ -108,7 +108,7 @@ sources:
         target: ros_packages/laser_uav_simulation
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_gazebo_resources.git
+  - repo: https://github.com/LASER-Robotics/laser_gazebo_resources.git
     name: laser_gazebo_resources
     rev: stable
     type: git
@@ -120,7 +120,7 @@ sources:
         target: ros_packages/laser_gazebo_resources
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_estimators.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_estimators.git
     name: laser_uav_estimators
     rev: stable
     type: git
@@ -132,7 +132,7 @@ sources:
         target: ros_packages/laser_uav_estimators
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_lib.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_lib.git
     name: laser_uav_lib
     rev: stable
     type: git
@@ -144,7 +144,7 @@ sources:
         target: ros_packages/laser_uav_lib
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_deployment.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_deployment.git
     name: laser_uav_deployment
     rev: stable
     type: git
@@ -156,7 +156,7 @@ sources:
         target: ros_packages/laser_uav_deployment
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_vio-s.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_vio-s.git
     name: laser_uav_vio-s
     rev: stable
     type: git
@@ -168,7 +168,7 @@ sources:
         target: ros_packages/laser_uav_vio-s
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_lio-s.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_lio-s.git
     name: laser_uav_lio-s
     rev: stable
     type: git
@@ -180,7 +180,7 @@ sources:
         target: ros_packages/laser_uav_lio-s
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_tui.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_tui.git
     name: laser_uav_tui
     rev: stable
     type: git
@@ -192,7 +192,7 @@ sources:
         target: ros_packages/laser_uav_tui
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_imu_filter.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_imu_filter.git
     name: laser_uav_imu_filter
     rev: stable
     type: git
@@ -204,7 +204,7 @@ sources:
         target: ros_packages/laser_uav_imu_filter
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:LASER-Robotics/laser_uav_drivers.git
+  - repo: https://github.com/LASER-Robotics/laser_uav_drivers.git
     name: laser_uav_drivers
     rev: stable
     type: git
