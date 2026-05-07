@@ -164,17 +164,6 @@ if [ "$REAL_UAV" == $TRUE ]; then
    export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:$BASE_DIR/git/laser_uav_system/ros_packages/laser_uav_simulation/models:$BASE_DIR/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models && echo -e "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models" >> ~/.bashrc
  fi
 
- # Autodiff for EKF
- cd $BASE_DIR/laser_uav_system_ws/src/laser_uav_estimators/
- git submodule update --recursive --init
- cd autodiff
- mkdir -p build
- cd build
- cmake -DAUTODIFF_BUILD_TESTS=OFF -DAUTODIFF_BUILD_PYTHON=OFF ..
- sudo make install -j4
-
- source ~/.bashrc
-
  # Ceres solver for Open Vins
  sudo apt-get install ros-humble-ros2bag ros-humble-rosbag2* -y
  sudo apt-get install libeigen3-dev libboost-all-dev libceres-dev -y
