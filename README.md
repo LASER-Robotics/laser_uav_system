@@ -50,7 +50,7 @@ We strongly recommend utilizing our custom Linux setup for optimized system usab
 cd /tmp
 echo "mkdir ~/git
 cd ~/git
-git clone [https://github.com/Augusto-Viniciuss/linux-setup.git](https://github.com/Augusto-Viniciuss/linux-setup.git)
+git clone https://github.com/Augusto-Viniciuss/linux-setup.git
 cd ~/git/linux-setup
 ./install.sh
 cd ~/git
