@@ -54,7 +54,7 @@ git clone https://github.com/Augusto-Viniciuss/linux-setup.git
 cd ~/git/linux-setup
 ./install.sh
 cd ~/git
-git clone git@github.com:LASER-Robotics/laser_uav_system.git
+git clone https://github.com/LASER-Robotics/laser_uav_system.git
 cd ~/git/laser_uav_system
 ./install.sh" > run.sh && source run.sh
 ```
@@ -64,7 +64,7 @@ If you only wish to install the system, copy and paste the snippet below into yo
 cd /tmp
 echo "mkdir ~/git
 cd ~/git
-git clone git@github.com:LASER-Robotics/laser_uav_system.git
+git clone https://github.com/LASER-Robotics/laser_uav_system.git
 cd ~/git/laser_uav_system
 ./install.sh" > run.sh && source run.sh
 ```
