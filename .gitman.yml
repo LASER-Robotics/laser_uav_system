@@ -36,8 +36,8 @@ sources:
         target: ros_packages/px4_msgs
     scripts:
       - git submodule update --init --recursive
-  - repo: https://github.com/LASER-Robotics/laser_uav_px4_api.git
-    name: laser_uav_px4_api
+  - repo: https://github.com/LASER-Robotics/laser_uav_hw_api.git
+    name: laser_uav_hw_api
     rev: stable
     type: git
     params:
@@ -45,7 +45,7 @@ sources:
       -
     links:
       - source: ''
-        target: ros_packages/laser_uav_px4_api
+        target: ros_packages/laser_uav_hw_api
     scripts:
       - git submodule update --init --recursive
   - repo: https://github.com/LASER-Robotics/laser_uav_managers.git
@@ -220,7 +220,7 @@ sources_locked:
 groups:
   - name: simulation
     members:
-      - laser_uav_px4_api
+      - laser_uav_hw_api
       - laser_uav_managers
       - laser_uav_controllers
       - laser_uav_estimators
@@ -239,7 +239,7 @@ groups:
   - name: real
     members:
       - laser_uav_deployment
-      - laser_uav_px4_api
+      - laser_uav_hw_api
       - laser_uav_managers
       - laser_uav_controllers
       - laser_uav_estimators
