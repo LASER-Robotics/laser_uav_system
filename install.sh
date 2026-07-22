@@ -120,7 +120,6 @@ if [ "$REAL_UAV" == $FALSE ]; then
 
   if [[ "$fcu_type" == "ap" || "$fcu_type" == "px4 ap" ]]; then
     pip3 install mavproxy
-    (cd ap_firmware && ./waf configure --enable-DDS)
     (cd micro_xrce_dds_gen && ./gradlew assemble)
 
     # Add microxrceddsgen to PATH instead of symlinking to /usr/local/bin
@@ -131,6 +130,7 @@ if [ "$REAL_UAV" == $FALSE ]; then
     elif ! grep -q "micro_xrce_dds_gen/scripts" ~/.bashrc; then
       echo 'export PATH="$PATH:'"$DDS_GEN_PATH"'"' >> ~/.bashrc
     fi
+    (cd ap_firmware && ./waf configure --enable-DDS)
 
     rm -rf micro_xrce_dds_gen
   fi
