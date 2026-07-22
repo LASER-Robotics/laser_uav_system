@@ -122,7 +122,16 @@ if [ "$REAL_UAV" == $FALSE ]; then
     pip3 install mavproxy
     (cd ap_firmware && ./waf configure --enable-DDS)
     (cd micro_xrce_dds_gen && ./gradlew assemble)
-    sudo ln -sf "$BASE_DIR/git/laser_uav_system/ros_packages/micro_xrce_dds_gen/scripts/microxrceddsgen" /usr/local/bin/microxrceddsgen
+
+    # Add microxrceddsgen to PATH instead of symlinking to /usr/local/bin
+    DDS_GEN_PATH="$BASE_DIR/git/laser_uav_system/ros_packages/micro_xrce_dds_gen/scripts"
+    export PATH="$PATH:$DDS_GEN_PATH"
+    if [ "${GITHUB_ACTIONS}" == "true" ]; then
+      echo "$DDS_GEN_PATH" >> "$GITHUB_PATH"
+    elif ! grep -q "micro_xrce_dds_gen/scripts" ~/.bashrc; then
+      echo 'export PATH="$PATH:'"$DDS_GEN_PATH"'"' >> ~/.bashrc
+    fi
+
     rm -rf micro_xrce_dds_gen
   fi
 fi
@@ -201,7 +210,7 @@ source ~/.bashrc
 
 # Build ROS workspace
 cd "$BASE_DIR/laser_uav_system_ws"
-colcon build --symlink-install --parallel-workers $BUILD_CORES --cmake-args -Wno-dev
+colcon build --symlink-install --merge-install --parallel-workers $BUILD_CORES --cmake-args -Wno-dev
 
 if ! grep -q "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc; then
   source "$BASE_DIR/laser_uav_system_ws/install/setup.bash"
