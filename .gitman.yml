@@ -1,5 +1,29 @@
 location: .gitman
 sources:
+  - repo: https://github.com/LASER-Robotics/ap_firmware-ROS2-.git
+    name: ap_firmware-ROS2-
+    rev: dev/dds_att
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/ap_firmware
+    scripts:
+      - git submodule update --init --recursive
+  - repo: https://github.com/LASER-Robotics/Micro-XRCE-DDS-Gen.git
+    name: Micro-XRCE-DDS-Gen
+    rev: feature/v3
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/micro_xrce_dds_agen
+    scripts:
+      - git submodule update --init --recursive
   - repo: https://github.com/LASER-Robotics/px4_firmware-ROS2-.git
     name: px4_firmware-ROS2-
     rev: release/1.15
@@ -218,6 +242,14 @@ sources:
       - git submodule update --init --recursive
 sources_locked:
 groups:
+  - name: px4
+    members:
+      - px4_firmware-ROS2-
+      - micro_xrce_dds_agent
+      - px4_msgs
+  - name: ap
+    members:
+      - ap_firmware-ROS2-
   - name: simulation
     members:
       - laser_uav_hw_api
@@ -230,9 +262,6 @@ groups:
       - laser_uav_lib
       - laser_uav_simulation
       - laser_gazebo_resources
-      - px4_firmware-ROS2-
-      - micro_xrce_dds_agent
-      - px4_msgs
       - laser_uav_vio-s
       - laser_uav_lio-s
       - laser_uav_tui
