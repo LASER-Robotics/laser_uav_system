@@ -11,9 +11,11 @@ else
   TRUE="true"
 fi
 
+# Use half of available CPU cores to prevent system freeze during heavy builds
 BUILD_CORES=$(($(nproc) / 2))
 [[ $BUILD_CORES -lt 1 ]] && BUILD_CORES=1
 
+# Helper function for interactive [y/n] prompts with timeout
 ask_yes_no() {
   local prompt="$1"
   local default="${2:-n}"
@@ -46,7 +48,7 @@ if [ -z "$REAL_UAV" ]; then
   source ~/.bashrc
 fi
 
-# Install ROS Humble and Gazebo garden
+# Install ROS Humble and Gazebo
 cd ./environment_install
 ./install_ros_humble.sh
 
@@ -62,7 +64,7 @@ if ! grep -q "MAKEFLAGS" ~/.bashrc; then
   echo "export MAKEFLAGS=\"-j$BUILD_CORES\"" >> ~/.bashrc
 fi
 
-# Install dep and packages
+# Install system dependencies and Python packages
 sudo apt-get update
 sudo apt-get install -y \
   pip \
@@ -102,13 +104,14 @@ else
   gitman install real --force
 fi
 
-# Create workspace and create symbolic link for dirs
+# Create ROS workspace and symlink packages
 cd "$BASE_DIR"
 mkdir -p laser_uav_system_ws/src
 cd "$BASE_DIR/laser_uav_system_ws/src"
 
 ln -sf "$BASE_DIR/git/laser_uav_system/ros_packages/"* ./
 
+# Build firmware and DDS tools for simulation
 if [ "$REAL_UAV" == $FALSE ]; then
   if [[ "$fcu_type" == "px4" || "$fcu_type" == "px4 ap" ]]; then
     (cd laser_uav_simulation/scripts && ./build_px4_firmware.sh)
@@ -125,7 +128,8 @@ if [ "$REAL_UAV" == $FALSE ]; then
 fi
 
 rm -rf micro_xrce_dds_agent
-# Make package with comunication protocol
+
+# Build and install Micro-XRCE-DDS Agent
 (
   cd "$BASE_DIR/git/laser_uav_system/ros_packages/micro_xrce_dds_agent"
   mkdir -p build
@@ -136,6 +140,7 @@ rm -rf micro_xrce_dds_agent
 )
 sudo ldconfig /usr/local/lib/
 
+# Configure real UAV hardware drivers and environment
 if [ "$REAL_UAV" == $TRUE ]; then
   if [ -z "$UAV_NAME" ]; then
     resp=""
@@ -153,19 +158,17 @@ if [ "$REAL_UAV" == $TRUE ]; then
     "$BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh"
     "$BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh"
   else
-    # Realsense SDK installation
     if ask_yes_no "Install Realsense Series SDK?"; then
       "$BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh"
     fi
 
-    # Livox SDK installation
     if ask_yes_no "Install Livox Series SDK?"; then
       "$BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh"
     fi
   fi
 fi
 
-# Acados installation solver of nmpc
+# Build and install Acados NMPC solver
 cd "$BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/"
 git submodule update --recursive --init
 cd acados
@@ -182,6 +185,7 @@ if ! grep -q "ACADOS_SOURCE_DIR" ~/.bashrc; then
   echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"'"$ACADOS_SOURCE_DIR"'/lib"' >> ~/.bashrc
 fi
 
+# Configure Gazebo environment variables
 if ! grep -q "GAZEBO_PLUGIN_PATH" ~/.bashrc; then
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic"
   echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"'$BASE_DIR'/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic"' >> ~/.bashrc
@@ -195,9 +199,9 @@ fi
 
 source ~/.bashrc
 
-# Build workspace
+# Build ROS workspace
 cd "$BASE_DIR/laser_uav_system_ws"
-colcon build --symlink-install --merge-install --parallel-workers $BUILD_CORES --cmake-args -Wno-dev
+colcon build --symlink-install --parallel-workers $BUILD_CORES --cmake-args -Wno-dev
 
 if ! grep -q "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc; then
   source "$BASE_DIR/laser_uav_system_ws/install/setup.bash"
