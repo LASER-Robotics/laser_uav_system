@@ -30,8 +30,9 @@ if [ "$REAL_UAV" == $FALSE ]; then
   fi
 fi
 
-if [ $(grep -c "MAKEFLAGS" ~/.bashrc) -ne 1 ]; then
-  export MAKEFLAGS=-j4 && echo -e "export MAKEFLAGS=-j4" >> ~/.bashrc
+if ! grep -q "MAKEFLAGS" ~/.bashrc; then
+  export MAKEFLAGS="-j4"
+  echo 'export MAKEFLAGS="-j4"' >> ~/.bashrc
 fi
 
 # Install dep and packages
