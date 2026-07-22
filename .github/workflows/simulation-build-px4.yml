@@ -10,7 +10,7 @@ on:
 
 env:
   REAL_UAV: '"false"'
-  FCU: '"px4"'
+  FCU: 'px4'
 
 jobs:
   build:
