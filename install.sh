@@ -47,15 +47,15 @@ fi
 # cd $BASE_DIR/git/laser_uav_system
 
 if [ "$REAL_UAV" == $FALSE ]; then
-  # gitman install simulation --force
   resp=""
   [[ -t 0 ]] && while true; do
-    read -p $'\e[1;32mWhat do you want to install? (px4 / ap / px4-ap):\e[0m ' resp
+    read -p $'\e[1;32mWhat do you want to install? (px4 / ap / px4 ap):\e[0m ' resp
 
     resp="${resp,,}"
 
-    if [[ "$resp" == "px4" || "$resp" == "ap" || "$resp" == "px4-ap" ]]; then
-      gitman install $resp --force
+    if [[ "$resp" == "px4" || "$resp" == "ap" || "$resp" == "px4 ap" ]]; then
+      gitman install simulation $resp --force
+      break
     else
       echo -e "\e[1;31mInvalid option! Please enter only 'px4', 'ap', or 'px4-ap'.\e[0m"
     fi
