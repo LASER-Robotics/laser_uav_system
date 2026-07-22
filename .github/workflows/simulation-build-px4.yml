@@ -1,4 +1,4 @@
-name: real-build
+name: simulation-build-px4
 
 on:
   workflow_dispatch:
@@ -9,9 +9,8 @@ on:
         default: 'false'
 
 env:
-  REAL_UAV: '"true"'
-  UAV_NAME: '"uav1"'
-  UAV_TYPE: '"x500"'
+  REAL_UAV: '"false"'
+  FCU: '"px4"'
 
 jobs:
   build:
