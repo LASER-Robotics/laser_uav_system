@@ -92,18 +92,16 @@ if [ "$REAL_UAV" == $FALSE ]; then
   if [[ "$fcu_type" == "ap" || "$fcu_type" == "px4 ap" ]]; then
     pip3 install mavproxy
     cd $BASE_DIR/laser_uav_system_ws/src
-    cd ap_firmware
-    ./waf configure --enable-DDS
-    cd $BASE_DIR/laser_uav_system_ws/src
     cd micro_xrce_dds_gen
     ./gradlew assemble
     sudo ln -s "$PWD/scripts/microxrceddsgen" /usr/local/bin/microxrceddsgen
     cd $BASE_DIR/laser_uav_system_ws/src
-    rm micro_xrce_dds_gen
+    rm micro_xrce_dds_gen micro_xrce_dds_agent
+    cd ap_firmware
+    ./waf configure --enable-DDS
   fi
 fi
 
-rm micro_xrce_dds_agent
 # Make package with comunication protocol
 cd $BASE_DIR/git/laser_uav_system/ros_packages/micro_xrce_dds_agent
 mkdir build
