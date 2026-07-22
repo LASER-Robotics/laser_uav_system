@@ -70,7 +70,7 @@ sudo apt-get install -y \
   pip \
   ros-humble-mavlink* \
   ros-humble-pcl* \
-  ros-humble-micro-ros-msgs*
+  ros-humble-micro-ros-msgs* \
   ros-humble-ros2bag ros-humble-rosbag2* \
   libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
   libunwind-dev \
