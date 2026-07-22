@@ -10,7 +10,7 @@ on:
 
 env:
   REAL_UAV: '"false"'
-  FCU: '"ap"'
+  FCU: 'ap'
 
 jobs:
   build:
