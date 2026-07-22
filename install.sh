@@ -35,11 +35,11 @@ fi
 # fi
 
 # # Install dep and packages
-# sudo apt-get update
-# sudo apt install pip -y
-# pip install packaging==24.2
-# pip3 install kconfiglib jsonschema pyros future empy==3.3.4 pyros-genmsg setuptools
-# sudo pip3 install --upgrade gitman
+sudo apt-get update
+sudo apt install pip -y
+pip install packaging==24.2
+pip3 install kconfiglib jsonschema pyros future empy==3.3.4 pyros-genmsg setuptools
+sudo pip3 install --upgrade gitman
 # sudo apt install ros-humble-mavlink* -y
 # sudo apt install ros-humble-pcl* -y
 # sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libunwind-dev
@@ -69,7 +69,7 @@ else
   gitman install real --force
 fi
 
-# # Create workspace and create symbolic link for dirs
+# Create workspace and create symbolic link for dirs
 # cd $BASE_DIR
 # mkdir laser_uav_system_ws
 # cd $BASE_DIR/laser_uav_system_ws
@@ -77,12 +77,20 @@ fi
 # cd src
 
 # ln -sf $BASE_DIR/git/laser_uav_system/ros_packages/* ./
+# cd $BASE_DIR/laser_uav_system_ws/src
+# rm micro_xrce_dds_gen
 
 # if [ "$REAL_UAV" == $FALSE ]; then
-#   cd laser_uav_simulation/scripts
-#   ./build_px4_firmware.sh
-#   cd $BASE_DIR/laser_uav_system_ws/src
-#   rm px4_firmware
+#   if [[ "$resp" == "px4" || "$resp" == "px4 ap" ]]; then
+#     cd laser_uav_simulation/scripts
+#     ./build_px4_firmware.sh
+#     cd $BASE_DIR/laser_uav_system_ws/src
+#     rm px4_firmware
+#   fi
+
+#   if [[ "$resp" == "ap" || "$resp" == "px4 ap" ]]; then
+
+#   fi
 # fi
 
 # rm micro_xrce_dds_agent
