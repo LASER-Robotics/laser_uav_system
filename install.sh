@@ -11,54 +11,55 @@ else
   TRUE="true"
 fi
 
-# if [ -z "$REAL_UAV" ]; then
-#   resp=""
-#   [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav? (true, false):\e[0m\n' resp; }
-#   echo -e "export REAL_UAV=\""$resp"\"" >> ~/.bashrc
-#   source ~/.bashrc
-# fi
+if [ -z "$REAL_UAV" ]; then
+  resp=""
+  [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav? (true, false):\e[0m\n' resp; }
+  echo -e "export REAL_UAV=\""$resp"\"" >> ~/.bashrc
+  source ~/.bashrc
+fi
 
-# # Install ROS Humble and Gazebo garden
-# cd ./environment_install
+# Install ROS Humble and Gazebo garden
+cd ./environment_install
 
-# ./install_ros_humble.sh
+./install_ros_humble.sh
 
-# if [ "$REAL_UAV" == $FALSE ]; then
-#   if ! ls "/usr/bin" | grep -q "gazebo"; then
-#     ./install_gazebo.sh
-#     sudo apt install ros-humble-gazebo-* -y
-#   fi
-# fi
+if [ "$REAL_UAV" == $FALSE ]; then
+  if ! ls "/usr/bin" | grep -q "gazebo"; then
+    ./install_gazebo.sh
+    sudo apt install ros-humble-gazebo-* -y
+  fi
+fi
 
-# if [ $(grep -c "MAKEFLAGS" ~/.bashrc) -ne 1 ]; then
-#   export MAKEFLAGS=-j4 && echo -e "export MAKEFLAGS=-j4" >> ~/.bashrc
-# fi
+if [ $(grep -c "MAKEFLAGS" ~/.bashrc) -ne 1 ]; then
+  export MAKEFLAGS=-j4 && echo -e "export MAKEFLAGS=-j4" >> ~/.bashrc
+fi
 
-# # Install dep and packages
+# Install dep and packages
 sudo apt-get update
 sudo apt install pip -y
 pip install packaging==24.2
 pip3 install kconfiglib jsonschema pyros future empy==3.3.4 pyros-genmsg setuptools
 sudo pip3 install --upgrade gitman
-# sudo apt install ros-humble-mavlink* -y
-# sudo apt install ros-humble-pcl* -y
-# sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libunwind-dev
+sudo apt install ros-humble-mavlink* -y
+sudo apt install ros-humble-pcl* -y
+sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libunwind-dev
 
-# cd $BASE_DIR/git/laser_uav_system
+cd $BASE_DIR/git/laser_uav_system
 
+fcu_type=""
 if [ "$REAL_UAV" == $FALSE ]; then
 
   if [ "${GITHUB_ACTIONS}" == "true" ]; then
     gitman install simulation $FCU --force
+    fcu_type=$FCU
   else
-    resp=""
     [[ -t 0 ]] && while true; do
-      read -p $'\e[1;32mWhat do you want to install? (px4 / ap / px4 ap):\e[0m ' resp
+      read -p $'\e[1;32mWhat do you want to install? (px4 / ap / px4 ap):\e[0m ' fcu_type
 
-      resp="${resp,,}"
+      fcu_type="${fcu_type,,}"
 
-      if [[ "$resp" == "px4" || "$resp" == "ap" || "$resp" == "px4 ap" ]]; then
-        gitman install simulation $resp --force
+      if [[ "$fcu_type" == "px4" || "$fcu_type" == "ap" || "$fcu_type" == "px4 ap" ]]; then
+        gitman install simulation $fcu_type --force
         break
       else
         echo -e "\e[1;31mInvalid option! Please enter only 'px4', 'ap', or 'px4-ap'.\e[0m"
@@ -70,136 +71,144 @@ else
 fi
 
 # Create workspace and create symbolic link for dirs
-# cd $BASE_DIR
-# mkdir laser_uav_system_ws
-# cd $BASE_DIR/laser_uav_system_ws
-# mkdir src
-# cd src
+cd $BASE_DIR
+mkdir laser_uav_system_ws
+cd $BASE_DIR/laser_uav_system_ws
+mkdir src
+cd src
 
-# ln -sf $BASE_DIR/git/laser_uav_system/ros_packages/* ./
-# cd $BASE_DIR/laser_uav_system_ws/src
-# rm micro_xrce_dds_gen
+ln -sf $BASE_DIR/git/laser_uav_system/ros_packages/* ./
+cd $BASE_DIR/laser_uav_system_ws/src
 
-# if [ "$REAL_UAV" == $FALSE ]; then
-#   if [[ "$resp" == "px4" || "$resp" == "px4 ap" ]]; then
-#     cd laser_uav_simulation/scripts
-#     ./build_px4_firmware.sh
-#     cd $BASE_DIR/laser_uav_system_ws/src
-#     rm px4_firmware
-#   fi
+if [ "$REAL_UAV" == $FALSE ]; then
+  if [[ "$fcu_type" == "px4" || "$fcu_type" == "px4 ap" ]]; then
+    cd laser_uav_simulation/scripts
+    ./build_px4_firmware.sh
+    cd $BASE_DIR/laser_uav_system_ws/src
+    rm px4_firmware
+  fi
 
-#   if [[ "$resp" == "ap" || "$resp" == "px4 ap" ]]; then
+  if [[ "$fcu_type" == "ap" || "$fcu_type" == "px4 ap" ]]; then
+    pip3 install mavproxy
+    cd $BASE_DIR/laser_uav_system_ws/src
+    cd ap_firmware
+    ./waf configure --enable-DDS
+    cd $BASE_DIR/laser_uav_system_ws/src
+    cd micro_xrce_dds_gen
+    ./gradlew assemble
+    sudo ln -s "$PWD/scripts/microxrceddsgen" /usr/local/bin/microxrceddsgen
+    cd $BASE_DIR/laser_uav_system_ws/src
+    rm micro_xrce_dds_gen
+  fi
+fi
 
-#   fi
-# fi
+rm micro_xrce_dds_agent
+# Make package with comunication protocol
+cd $BASE_DIR/git/laser_uav_system/ros_packages/micro_xrce_dds_agent
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+sudo ldconfig /usr/local/lib/
 
-# rm micro_xrce_dds_agent
-# # Make package with comunication protocol
-# cd $BASE_DIR/git/laser_uav_system/ros_packages/micro_xrce_dds_agent
-# mkdir build
-# cd build
-# cmake ..
-# make
-# sudo make install
-# sudo ldconfig /usr/local/lib/
+if [ "$REAL_UAV" == $TRUE ]; then
+  if [ -z "$UAV_NAME" ]; then
+    resp=""
+    [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav name (ex: uav1, uav2, uav3, ...):\e[0m\n' resp; }
+    echo -e "export UAV_NAME=\""$resp"\"" >> ~/.bashrc
+  fi
 
-# if [ "$REAL_UAV" == $TRUE ]; then
-#   if [ -z "$UAV_NAME" ]; then
-#     resp=""
-#     [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav name (ex: uav1, uav2, uav3, ...):\e[0m\n' resp; }
-#     echo -e "export UAV_NAME=\""$resp"\"" >> ~/.bashrc
-#   fi
+  if [ -z "$UAV_TYPE" ]; then
+    resp=""
+    [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav type (ex: x500, lr7pro, ...):\e[0m\n' resp; }
+    echo -e "export UAV_TYPE=\""$resp"\"" >> ~/.bashrc
+  fi
 
-#   if [ -z "$UAV_TYPE" ]; then
-#     resp=""
-#     [[ -t 0 ]] && { read -p $'\e[1;32mWhat the uav type (ex: x500, lr7pro, ...):\e[0m\n' resp; }
-#     echo -e "export UAV_TYPE=\""$resp"\"" >> ~/.bashrc
-#   fi
+  if [ "${GITHUB_ACTIONS}" == "true" ]; then
+    $BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh
+    $BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh
+  else
+    # realsense sdk installation
+    default=n
+    while true; do
+      if [[ "$unattended" == "1" ]]; then
+        resp=$default
+      else
+        [[ -t 0 ]] && { read -t 10 -n 2 -p $'\e[1;32mInstall Realsense Series SDK? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default; }
+      fi
+      response=$(echo $resp | sed -r 's/(.*)$/\1=/')
 
-#   if [ "${GITHUB_ACTIONS}" == "true" ]; then
-#     $BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh
-#     $BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh
-#   else
-#     # realsense sdk installation
-#     default=n
-#     while true; do
-#       if [[ "$unattended" == "1" ]]; then
-#         resp=$default
-#       else
-#         [[ -t 0 ]] && { read -t 10 -n 2 -p $'\e[1;32mInstall Realsense Series SDK? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default; }
-#       fi
-#       response=$(echo $resp | sed -r 's/(.*)$/\1=/')
+      if [[ $response =~ ^(y|Y)=$ ]]; then
+        $BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh
+        break
+      elif [[ $response =~ ^(n|N)=$ ]]; then
+        break
+      else
+        echo " What? \"$resp\" is not a correct answer."
+      fi
+    done
 
-#       if [[ $response =~ ^(y|Y)=$ ]]; then
-#         $BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh
-#         break
-#       elif [[ $response =~ ^(n|N)=$ ]]; then
-#         break
-#       else
-#         echo " What? \"$resp\" is not a correct answer."
-#       fi
-#     done
+    # livox sdk installation
+    default=n
+    while true; do
+      if [[ "$unattended" == "1" ]]; then
+        resp=$default
+      else
+        [[ -t 0 ]] && { read -t 10 -n 2 -p $'\e[1;32mInstall Livox Series SDK? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default; }
+      fi
+      response=$(echo $resp | sed -r 's/(.*)$/\1=/')
 
-#     # livox sdk installation
-#     default=n
-#     while true; do
-#       if [[ "$unattended" == "1" ]]; then
-#         resp=$default
-#       else
-#         [[ -t 0 ]] && { read -t 10 -n 2 -p $'\e[1;32mInstall Livox Series SDK? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default; }
-#       fi
-#       response=$(echo $resp | sed -r 's/(.*)$/\1=/')
+      if [[ $response =~ ^(y|Y)=$ ]]; then
+        $BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh
+        break
+      elif [[ $response =~ ^(n|N)=$ ]]; then
+        break
+      else
+        echo " What? \"$resp\" is not a correct answer."
+      fi
+    done
+  fi
+fi
 
-#       if [[ $response =~ ^(y|Y)=$ ]]; then
-#         $BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh
-#         break
-#       elif [[ $response =~ ^(n|N)=$ ]]; then
-#         break
-#       else
-#         echo " What? \"$resp\" is not a correct answer."
-#       fi
-#     done
-#   fi
-# fi
+# Acados installation solver of nmpc
+cd $BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/
+git submodule update --recursive --init
+cd acados
+git submodule update --recursive --init
+mkdir -p build
+cd build
+cmake -DACADOS_WITH_QPOASES=ON ..
+make install -j4
 
-# # Acados installation solver of nmpc
-# cd $BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/
-# git submodule update --recursive --init
-# cd acados
-# git submodule update --recursive --init
-# mkdir -p build
-# cd build
-# cmake -DACADOS_WITH_QPOASES=ON ..
-# make install -j4
+if [ $(grep -c "ACADOS_SOURCE_DIR" ~/.bashrc) -ne 1 ]; then
+  export ACADOS_SOURCE_DIR="$BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/acados" && echo -e "#set acados solver of nmpc \nexport ACADOS_SOURCE_DIR="~/laser_uav_system_ws/src/laser_uav_controllers/acados"" >> ~/.bashrc
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/acados/lib" && echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/laser_uav_system_ws/src/laser_uav_controllers/acados/lib"" >> ~/.bashrc
+fi
 
-# if [ $(grep -c "ACADOS_SOURCE_DIR" ~/.bashrc) -ne 1 ]; then
-#   export ACADOS_SOURCE_DIR="$BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/acados" && echo -e "#set acados solver of nmpc \nexport ACADOS_SOURCE_DIR="~/laser_uav_system_ws/src/laser_uav_controllers/acados"" >> ~/.bashrc
-#   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$BASE_DIR/laser_uav_system_ws/src/laser_uav_controllers/acados/lib" && echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/laser_uav_system_ws/src/laser_uav_controllers/acados/lib"" >> ~/.bashrc
-# fi
+if [ $(grep -c "GAZEBO_PLUGIN_PATH" ~/.bashrc) -ne 1 ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" && echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic"" >> ~/.bashrc
+  export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic && echo -e "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
+  export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:$BASE_DIR/git/laser_uav_system/ros_packages/laser_uav_simulation/models:$BASE_DIR/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models && echo -e "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models" >> ~/.bashrc
+fi
 
-# if [ $(grep -c "GAZEBO_PLUGIN_PATH" ~/.bashrc) -ne 1 ]; then
-#   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" && echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:"~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic"" >> ~/.bashrc
-#   export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic && echo -e "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/build_gazebo-classic" >> ~/.bashrc
-#   export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:$BASE_DIR/git/laser_uav_system/ros_packages/laser_uav_simulation/models:$BASE_DIR/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models && echo -e "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:~/git/laser_uav_system/ros_packages/px4_firmware/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/models:~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/models" >> ~/.bashrc
-# fi
+# Ceres solver for Open Vins
+sudo apt-get install ros-humble-ros2bag ros-humble-rosbag2* -y
+sudo apt-get install libeigen3-dev libboost-all-dev libceres-dev -y
 
-# # Ceres solver for Open Vins
-# sudo apt-get install ros-humble-ros2bag ros-humble-rosbag2* -y
-# sudo apt-get install libeigen3-dev libboost-all-dev libceres-dev -y
+source ~/.bashrc
 
-# source ~/.bashrc
+# Build workspace
+cd $BASE_DIR/laser_uav_system_ws
+colcon build --symlink-install --merge-install --cmake-args -Wno-dev
 
-# # Build workspace
-# cd $BASE_DIR/laser_uav_system_ws
-# colcon build --symlink-install --merge-install --cmake-args -Wno-dev
+if [ $(grep -c "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
+  source $BASE_DIR/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
+fi
 
-# if [ $(grep -c "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc) -ne 1 ]; then
-#   source $BASE_DIR/laser_uav_system_ws/install/setup.bash && echo -e "\n\n#source laser_uav_system workspace \nsource ~/laser_uav_system_ws/install/setup.bash" >> ~/.bashrc
-# fi
+sudo apt install toilet
 
-# sudo apt install toilet
-
-# toilet laser
-# toilet uav
-# toilet system
-# toilet installed
+toilet laser
+toilet uav
+toilet system
+toilet installed
