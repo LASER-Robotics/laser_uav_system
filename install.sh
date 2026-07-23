@@ -131,8 +131,6 @@ if [ "$REAL_UAV" == $FALSE ]; then
     elif ! grep -q "micro_xrce_dds_gen/scripts" ~/.bashrc; then
       echo 'export PATH="$PATH:'"$DDS_GEN_PATH"'"' >> ~/.bashrc
     fi
-    export CXXFLAGS="-Wno-error=macro-redefined -Wno-error"
-    export CFLAGS="-Wno-error=macro-redefined -Wno-error"
     #(cd ap_firmware && ./waf configure --enable-DDS)
 
     rm -rf micro_xrce_dds_gen
@@ -213,7 +211,8 @@ source ~/.bashrc
 
 # Build ROS workspace
 cd "$BASE_DIR/laser_uav_system_ws"
-colcon build --symlink-install --merge-install --parallel-workers $BUILD_CORES --cmake-args -DCMAKE_CXX_FLAGS="-Wno-error" -Wno-dev
+colcon build --symlink-install --parallel-workers $BUILD_CORES \
+  --cmake-args -DCMAKE_C_FLAGS="-Wno-error" -DCMAKE_CXX_FLAGS="-Wno-error" -Wno-dev
 
 if ! grep -q "source ~/laser_uav_system_ws/install/setup.bash" ~/.bashrc; then
   source "$BASE_DIR/laser_uav_system_ws/install/setup.bash"
