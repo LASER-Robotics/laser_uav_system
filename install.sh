@@ -131,7 +131,7 @@ if [ "$REAL_UAV" == $FALSE ]; then
     elif ! grep -q "micro_xrce_dds_gen/scripts" ~/.bashrc; then
       echo 'export PATH="$PATH:'"$DDS_GEN_PATH"'"' >> ~/.bashrc
     fi
-    #(cd ap_firmware && ./waf configure --enable-DDS)
+    (cd ap_firmware && ./waf configure --disable-Werror --enable-DDS)
 
     rm -rf micro_xrce_dds_gen
   fi
