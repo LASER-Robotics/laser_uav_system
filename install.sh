@@ -131,7 +131,9 @@ if [ "$REAL_UAV" == $FALSE ]; then
     elif ! grep -q "micro_xrce_dds_gen/scripts" ~/.bashrc; then
       echo 'export PATH="$PATH:'"$DDS_GEN_PATH"'"' >> ~/.bashrc
     fi
-    (cd ap_firmware && ./waf configure --enable-DDS)
+    export CXXFLAGS="-Wno-error=macro-redefined -Wno-error"
+    export CFLAGS="-Wno-error=macro-redefined -Wno-error"
+    #(cd ap_firmware && ./waf configure --enable-DDS)
 
     rm -rf micro_xrce_dds_gen
   fi
