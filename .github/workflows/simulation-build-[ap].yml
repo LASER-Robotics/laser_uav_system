@@ -1,4 +1,4 @@
-name: simulation-build-ap
+name: simulation-build-[ap]
 
 on:
   workflow_dispatch:
