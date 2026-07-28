@@ -72,6 +72,18 @@ sources:
         target: ros_packages/px4_msgs
     scripts:
       - git submodule update --init --recursive
+  - repo: https://github.com/LASER-Robotics/ardupilot_msgs.git
+    name: ardupilot_msgs
+    rev: stable/lus
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/ardupilot_msgs
+    scripts:
+      - git submodule update --init --recursive
   - repo: https://github.com/LASER-Robotics/laser_uav_hw_api.git
     name: laser_uav_hw_api
     rev: stable
@@ -291,9 +303,11 @@ groups:
       - laser_msgs
       - laser_uav_lib
       - px4_msgs
+      - ardupilot_msgs
       - laser_uav_vio-s
       - laser_uav_lio-s
       - laser_uav_drivers
       - laser_uav_tui
       - Micro-XRCE-DDS-Agent
+      - micro-ROS-Agent
 default_group: ''
