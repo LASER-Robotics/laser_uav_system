@@ -1,4 +1,4 @@
-name: simulation-build-px4
+name: simulation-build-[px4]
 
 on:
   workflow_dispatch:
