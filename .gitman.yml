@@ -74,7 +74,7 @@ sources:
       - git submodule update --init --recursive
   - repo: https://github.com/LASER-Robotics/ardupilot_msgs.git
     name: ardupilot_msgs
-    rev: stable/lus
+    rev: lus/stable
     type: git
     params:
     sparse_paths:
