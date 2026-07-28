@@ -1,5 +1,41 @@
 location: .gitman
 sources:
+  - repo: https://github.com/LASER-Robotics/ap_firmware-ROS2-.git
+    name: ap_firmware-ROS2-
+    rev: dev/dds_att
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/ap_firmware
+    scripts:
+      - git submodule update --init --recursive
+  - repo: https://github.com/LASER-Robotics/Micro-XRCE-DDS-Gen.git
+    name: Micro-XRCE-DDS-Gen
+    rev: feature/v3
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/micro_xrce_dds_gen
+    scripts:
+      - git submodule update --init --recursive
+  - repo: https://github.com/LASER-Robotics/micro-ROS-Agent.git
+    name: micro-ROS-Agent
+    rev: humble
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/micro_ros_agent
+    scripts:
+      - git submodule update --init --recursive
   - repo: https://github.com/LASER-Robotics/px4_firmware-ROS2-.git
     name: px4_firmware-ROS2-
     rev: release/1.15
@@ -12,9 +48,9 @@ sources:
         target: ros_packages/px4_firmware
     scripts:
       - git submodule update --init --recursive
-  - repo: https://github.com/LASER-Robotics/micro_xrce_dds_agent.git
-    name: micro_xrce_dds_agent
-    rev: release/1.0
+  - repo: https://github.com/LASER-Robotics/Micro-XRCE-DDS-Agent.git
+    name: Micro-XRCE-DDS-Agent
+    rev: lus/stable 
     type: git
     params:
     sparse_paths:
@@ -34,6 +70,18 @@ sources:
     links:
       - source: ''
         target: ros_packages/px4_msgs
+    scripts:
+      - git submodule update --init --recursive
+  - repo: https://github.com/LASER-Robotics/ardupilot_msgs.git
+    name: ardupilot_msgs
+    rev: lus/stable
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: ros_packages/ardupilot_msgs
     scripts:
       - git submodule update --init --recursive
   - repo: https://github.com/LASER-Robotics/laser_uav_hw_api.git
@@ -218,6 +266,15 @@ sources:
       - git submodule update --init --recursive
 sources_locked:
 groups:
+  - name: px4
+    members:
+      - px4_firmware-ROS2-
+      - px4_msgs
+  - name: ap
+    members:
+      - ap_firmware-ROS2-
+      - Micro-XRCE-DDS-Gen
+      - micro-ROS-Agent
   - name: simulation
     members:
       - laser_uav_hw_api
@@ -230,12 +287,10 @@ groups:
       - laser_uav_lib
       - laser_uav_simulation
       - laser_gazebo_resources
-      - px4_firmware-ROS2-
-      - micro_xrce_dds_agent
-      - px4_msgs
       - laser_uav_vio-s
       - laser_uav_lio-s
       - laser_uav_tui
+      - Micro-XRCE-DDS-Agent
   - name: real
     members:
       - laser_uav_deployment
@@ -247,10 +302,12 @@ groups:
       - laser_uav_imu_filter
       - laser_msgs
       - laser_uav_lib
-      - micro_xrce_dds_agent
       - px4_msgs
+      - ardupilot_msgs
       - laser_uav_vio-s
       - laser_uav_lio-s
       - laser_uav_drivers
       - laser_uav_tui
+      - Micro-XRCE-DDS-Agent
+      - micro-ROS-Agent
 default_group: ''

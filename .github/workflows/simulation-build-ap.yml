@@ -1,4 +1,4 @@
-name: simulation-build
+name: simulation-build-ap
 
 on:
   workflow_dispatch:
@@ -10,6 +10,7 @@ on:
 
 env:
   REAL_UAV: '"false"'
+  FCU: 'ap'
 
 jobs:
   build:

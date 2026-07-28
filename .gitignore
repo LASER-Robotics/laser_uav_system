@@ -9,3 +9,6 @@ ros_packages/laser_uav_simulation
 ros_packages/px4_firmware
 ros_packages/laser_uav_deployment
 ros_packages/laser_uav_drivers
+ros_packages/ap_firmware
+ros_packages/micro_ros_agent
+ros_packages/micro_xrce_dds_gen
