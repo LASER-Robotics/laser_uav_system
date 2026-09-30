@@ -167,6 +167,7 @@ if [ "$REAL_UAV" == $TRUE ]; then
   if [ "${GITHUB_ACTIONS}" == "true" ]; then
     "$BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh"
     "$BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh"
+    "$BASE_DIR/git/laser_uav_system/environment_install/install_lx_camera_sdk.sh"
   else
     if ask_yes_no "Install Realsense Series SDK?"; then
       "$BASE_DIR/git/laser_uav_system/environment_install/install_realsense_sdk.sh"
@@ -174,6 +175,10 @@ if [ "$REAL_UAV" == $TRUE ]; then
 
     if ask_yes_no "Install Livox Series SDK?"; then
       "$BASE_DIR/git/laser_uav_system/environment_install/install_livox_sdk.sh"
+    fi
+
+    if ask_yes_no "Install LX Camera S Series SDK?"; then
+      "$BASE_DIR/git/laser_uav_system/environment_install/install_lx_camera_sdk.sh"
     fi
   fi
 fi
