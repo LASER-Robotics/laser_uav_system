@@ -15,13 +15,12 @@ This repository is the starting point for installing the system. [Gitman](.gitma
 
 The flight pipeline connects sensor measurements to vehicle commands:
 
-- Perception packages provide visual and LiDAR-inertial odometry.
-- The estimation manager combines measurements into the state used for control.
-- The planning manager generates trajectories with MINCO, PMM or SUPER.
-- The control manager handles takeoff, hold and landing, and tracks trajectories with NMPC and INDI.
-- The hardware API exchanges commands and telemetry with PX4 or ArduPilot.
-
-The simulation packages provide airframes, sensors, worlds and launch sessions for exercising the same stack in Gazebo Classic.
+* **Perception & State Estimation:** Sensor data processing, filtering, and state estimation (e.g., VIO, LIO).
+* **Planning:** Trajectory generation, motion planning, and mission planning capabilities.
+* **Mapping:** Local occupancy and distance maps for obstacle avoidance.
+* **Control:** High-level and low-level flight control algorithms.
+* **Hardware API:** Interface for robust communication with the flight controller (autopilot).
+* **Simulation:** Environments, models, and resources for comprehensive testing in Gazebo Classic simulation.
 
 ### Architecture
 
@@ -84,13 +83,14 @@ Airframe parameters include mass, inertia, motor allocation and thrust calibrati
 
 ## Packages
 
-The repositories installed depend on the Gitman group selected by the installer. Collections such as the planners, LIO and VIO repositories fetch their own component packages.
+The repositories installed depend on the Gitman group selected by the installer. Both simulation and real-hardware installations include the planning and mapping collections. These collections, along with LIO and VIO, fetch their own component packages.
 
 | Repository | Role in LUS |
 | --- | --- |
 | [laser_uav_managers](https://github.com/LASER-Robotics/laser_uav_managers) | Runs the control, planning and estimation nodes. |
 | [laser_uav_controllers](https://github.com/LASER-Robotics/laser_uav_controllers) | NMPC and INDI control libraries and NMPC tuning. |
 | [laser_uav_planners](https://github.com/LASER-Robotics/laser_uav_planners) | Collects the PMM and SUPER backends; MINCO uses the solver exported by SUPER. |
+| [laser_uav_mappings](https://github.com/LASER-Robotics/laser_uav_mappings) | Provides ROG-Map for local occupancy maps, obstacle inflation and distance fields used by SUPER. |
 | [laser_uav_estimators](https://github.com/LASER-Robotics/laser_uav_estimators) | State-estimator libraries and sensor-noise tuning. |
 | [laser_uav_lio-s](https://github.com/LASER-Robotics/laser_uav_lio-s) | FAST-LIO integration for LiDAR-inertial odometry. |
 | [laser_uav_vio-s](https://github.com/LASER-Robotics/laser_uav_vio-s) | OpenVINS integration for visual-inertial odometry. |
@@ -111,7 +111,7 @@ The repositories installed depend on the Gitman group selected by the installer.
 | [laser_uav_drivers](https://github.com/LASER-Robotics/laser_uav_drivers) | Sensor drivers and SDK wrappers for physical UAVs. |
 | [laser_uav_deployment](https://github.com/LASER-Robotics/laser_uav_deployment) | Deployment tools for onboard computers. |
 
-SUPER obstacle avoidance also needs the separate `laser_uav_mappings` collection and its `rog_map` package. See the managers README for its planning setup.
+The installer includes `laser_uav_mappings` and its `rog_map` package for SUPER obstacle avoidance. See the managers README for planner selection and the required sensor inputs and transforms.
 
 ## License
 
