@@ -24,7 +24,7 @@ The flight pipeline connects sensor measurements to vehicle commands:
 
 ### Architecture
 
-![LUS architecture and package relationships.](assets/system_architecture.png)
+![LUS architecture and package relationships.](assets/architecture.png)
 
 ## Getting started
 
