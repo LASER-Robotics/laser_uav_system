@@ -67,9 +67,9 @@ cd ~/laser_uav_system_ws/src/laser_uav_simulation/tmux/one_drone_px4
 
 The session opens the simulator, spawns the vehicle and starts the configured flight stack. Its `configs/` directory holds the spawn, planner and topic-monitor settings. Use the [simulation README](https://github.com/LASER-Robotics/laser_uav_simulation) for individual launch commands and sensor options.
 
-The lr7pro is one of the airframes used with LUS:
+The x500 is one of the airframes used with LUS:
 
-https://github.com/user-attachments/assets/6dfdd26c-1327-4a3c-a88e-73f5a55d394f
+https://github.com/user-attachments/assets/1d29f595-bfb7-46e5-bf5c-313c3700161c
 
 ## Flight validation
 
