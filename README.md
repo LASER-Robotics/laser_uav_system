@@ -9,18 +9,18 @@ The LASER UAV System (LUS) is an open-source ROS 2 framework for autonomous UAV 
 
 Use LUS to develop flight algorithms, test them in simulation and run the stack on a physical UAV. Its packages separate the flight pipeline into components that can be configured for different airframes and sensor setups.
 
-This repository is the starting point for installing the system. [Gitman](.gitman.yml) selects the component repositories and revisions, stores the checkouts in `.gitman/` and links them into `ros_packages/`. Each component has its own README with usage, configuration and interfaces.
+This repository brings together the LUS packages and installation tools. [Gitman](.gitman.yml) manages their versions, stores the checkouts in `.gitman/` and links them into `ros_packages/`.
 
 ## System overview
 
 The flight pipeline connects sensor measurements to vehicle commands:
 
-* **Perception & State Estimation:** Sensor data processing, filtering, and state estimation (e.g., VIO, LIO).
-* **Planning:** Trajectory generation, motion planning, and mission planning capabilities.
-* **Mapping:** Local occupancy and distance maps for obstacle avoidance.
-* **Control:** High-level and low-level flight control algorithms.
-* **Hardware API:** Interface for robust communication with the flight controller (autopilot).
-* **Simulation:** Environments, models, and resources for comprehensive testing in Gazebo Classic simulation.
+- Perception and state estimation provide odometry from visual, LiDAR, inertial and GNSS measurements.
+- Planning generates trajectories with MINCO, PMM or SUPER.
+- Mapping maintains local obstacle maps with ROG-Map.
+- Control handles takeoff, hold and landing, and tracks trajectories with NMPC and INDI.
+- The hardware API exchanges commands and telemetry with PX4 or ArduPilot.
+- Simulation provides airframes, sensors, worlds and launch sessions in Gazebo Classic.
 
 ### Architecture
 
@@ -58,7 +58,7 @@ Use the same namespace, clock and airframe configuration across the nodes for a 
 
 ## Run a simulation
 
-The ready-to-run sessions are in `laser_uav_simulation/tmux/`. For the PX4 session included in this checkout:
+Simulation sessions are in `laser_uav_simulation/tmux/`. To start the PX4 simulation:
 
 ```bash
 cd ~/laser_uav_system_ws/src/laser_uav_simulation/tmux/one_drone_px4
@@ -82,8 +82,6 @@ https://github.com/user-attachments/assets/92809e07-3467-4af6-8510-690d2e050b79
 Airframe parameters include mass, inertia, motor allocation and thrust calibration. Configure them for your vehicle before using the stack on hardware.
 
 ## Packages
-
-The repositories installed depend on the Gitman group selected by the installer. Both simulation and real-hardware installations include the planning and mapping collections. These collections, along with LIO and VIO, fetch their own component packages.
 
 | Repository | Role in LUS |
 | --- | --- |
@@ -110,8 +108,6 @@ The repositories installed depend on the Gitman group selected by the installer.
 | [ardupilot_msgs](https://github.com/LASER-Robotics/ardupilot_msgs) | ROS interfaces for ArduPilot communication. |
 | [laser_uav_drivers](https://github.com/LASER-Robotics/laser_uav_drivers) | Sensor drivers and SDK wrappers for physical UAVs. |
 | [laser_uav_deployment](https://github.com/LASER-Robotics/laser_uav_deployment) | Deployment tools for onboard computers. |
-
-The installer includes `laser_uav_mappings` and its `rog_map` package for SUPER obstacle avoidance. See the managers README for planner selection and the required sensor inputs and transforms.
 
 ## License
 
