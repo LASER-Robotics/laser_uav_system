@@ -69,7 +69,7 @@ The session opens the simulator, spawns the vehicle and starts the configured fl
 
 The x500 is one of the airframes used with LUS:
 
-https://github.com/user-attachments/assets/1d29f595-bfb7-46e5-bf5c-313c3700161c
+https://github.com/user-attachments/assets/738696f2-4f89-4515-8c81-98b573a931fe
 
 ## Flight validation
 
