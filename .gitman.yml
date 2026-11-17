@@ -38,7 +38,7 @@ sources:
       - git submodule update --init --recursive
   - repo: https://github.com/LASER-Robotics/px4_firmware-ROS2-.git
     name: px4_firmware-ROS2-
-    rev: release/1.15
+    rev: lus/release/1.17
     type: git
     params:
     sparse_paths:
@@ -62,7 +62,7 @@ sources:
       - git submodule update --init --recursive
   - repo: https://github.com/LASER-Robotics/px4_msgs.git
     name: px4_msgs
-    rev: release/1.15
+    rev: release/1.17
     type: git
     params:
     sparse_paths:
