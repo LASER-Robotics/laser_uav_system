@@ -41,6 +41,54 @@ ask_yes_no() {
   done
 }
 
+# Check for active swap space and warn before heavy builds
+check_swap() {
+  local mem_total_kb swap_total_kb ram_gb_display target_mem_gb swap_needed_gb
+  mem_total_kb=$(awk '/^MemTotal:/ {print $2}' /proc/meminfo)
+  swap_total_kb=$(awk '/^SwapTotal:/ {print $2}' /proc/meminfo)
+  mem_total_kb=${mem_total_kb:-0}
+  swap_total_kb=${swap_total_kb:-0}
+
+  if [[ "$swap_total_kb" -eq 0 ]]; then
+    ram_gb_display=$(awk -v kb="$mem_total_kb" 'BEGIN { printf "%.1f", kb / 1048576.0 }')
+    target_mem_gb=$((4 + 2 * BUILD_CORES))
+    [[ $target_mem_gb -lt 16 ]] && target_mem_gb=16
+    swap_needed_gb=$(awk -v target="$target_mem_gb" -v kb="$mem_total_kb" '
+      BEGIN {
+        diff = target - (kb / 1048576.0);
+        needed = int(diff);
+        if (diff > needed) needed += 1;
+        if (needed < 4) needed = 4;
+        print needed;
+      }')
+
+    echo -e "\e[1;33m[WARNING] No active swap space detected (SwapTotal: 0.0 GB, RAM: ${ram_gb_display} GB, BUILD_CORES: ${BUILD_CORES}).\e[0m"
+    echo -e "\e[1;33mHeavy C++ builds (colcon / PX4 / Acados / OpenVINS / SUPER) can exhaust RAM and freeze or crash the system (OOM kill).\e[0m"
+    echo ""
+    echo "Swap estimation equation:"
+    echo "  Target_Mem_GB = max(16, 4 + 2 * BUILD_CORES)   [= ${target_mem_gb} GB for ${BUILD_CORES} build cores]"
+    echo "  Swap_Needed_GB = max(4, Target_Mem_GB - RAM_GB) [= ${swap_needed_gb} GB for this machine]"
+    echo ""
+    echo "To create and enable a ${swap_needed_gb}G swapfile before continuing (run in another terminal or abort):"
+    echo "  sudo fallocate -l ${swap_needed_gb}G /swapfile"
+    echo "  sudo chmod 600 /swapfile"
+    echo "  sudo mkswap /swapfile"
+    echo "  sudo swapon /swapfile"
+    echo "  # Optional (persist across reboots):"
+    echo "  echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab"
+    echo ""
+
+    if [ "${GITHUB_ACTIONS}" != "true" ]; then
+      if ! ask_yes_no "Continue installation without swap?" "n"; then
+        echo -e "\e[1;31mInstallation aborted. Create swap space and re-run ./install.sh.\e[0m"
+        exit 1
+      fi
+    fi
+  fi
+}
+
+check_swap
+
 if [ -z "$REAL_UAV" ]; then
   resp=""
   [[ -t 0 ]] && { read -p $'\e[1;32mThis is a real uav? (true, false):\e[0m\n' resp; }

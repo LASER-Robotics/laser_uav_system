@@ -1,7 +1,8 @@
 # LASER UAV System [LUS]
 
 [![simulation-build-[px4]](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/simulation-build-%5Bpx4%5D.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/simulation-build-%5Bpx4%5D.yml)
-[![real-build-[px4-ap]](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/real-build-%5Bpx4-ap%5D.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/real-build-%5Bpx4-ap%5D.yml)
+[![real-build-[px4-ap]-amd64](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/real-build-%5Bpx4-ap%5D-amd64.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/real-build-%5Bpx4-ap%5D-amd64.yml)
+[![real-build-[px4-ap]-arm64](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/real-build-%5Bpx4-ap%5D-arm64.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/real-build-%5Bpx4-ap%5D-arm64.yml)
 [![License: BSD3](https://img.shields.io/badge/License-BSD3-white.svg)](https://opensource.org/licenses/BSD3) \
 [![simulation-build-[ap]](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/simulation-build-%5Bap%5D.yml/badge.svg)](https://github.com/LASER-Robotics/laser_uav_system/actions/workflows/simulation-build-%5Bap%5D.yml)
 

@@ -1,4 +1,4 @@
-name: real-build-[px4-ap]
+name: real-build-[px4-ap]-amd64
 
 on:
   workflow_dispatch:
