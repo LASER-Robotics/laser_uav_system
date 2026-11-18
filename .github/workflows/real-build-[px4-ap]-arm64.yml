@@ -40,10 +40,10 @@ jobs:
         run: |
           set -e
           uname -m
-          file "$GITHUB_WORKSPACE/laser_uav_system_ws/install/laser_uav_controllers/lib/libacados_ocp_solver_multirotor_ode.so"
+          file -L "$GITHUB_WORKSPACE/laser_uav_system_ws/install/laser_uav_controllers/lib/libacados_ocp_solver_multirotor_ode.so"
           source /opt/ros/humble/setup.bash
           export ACADOS_SOURCE_DIR="$GITHUB_WORKSPACE/laser_uav_system_ws/src/laser_uav_controllers/acados"
           export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ACADOS_SOURCE_DIR/lib"
           source "$GITHUB_WORKSPACE/laser_uav_system_ws/install/setup.bash"
           cd "$GITHUB_WORKSPACE/laser_uav_system_ws/build/laser_uav_managers"
-          ctest --output-on-failure -E "flake8|uncrustify|cpplint|cppcheck|lint_cmake|xmllint|copyright"
+          ctest -L gtest --output-on-failure
